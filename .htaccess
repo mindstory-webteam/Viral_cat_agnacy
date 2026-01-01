@@ -1,0 +1,72 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# ==================== BLOG CLEAN URLS - MUST BE FIRST ====================
+# Step 1: Skip WordPress processing for blog HTML files
+RewriteCond %{REQUEST_URI} ^/blogs\.html$ [OR]
+RewriteCond %{REQUEST_URI} ^/blog-detail\.html$
+RewriteRule ^ - [L]
+
+# Step 2: Rewrite /blogs → /blogs.html (WITHOUT .html stripping)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^blogs/?$ /blogs.html [L,NC]
+
+# Step 3: Rewrite /blog-detail/slug → /blog-detail.html?slug=slug
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/blog/ [NC]
+RewriteRule ^blog-detail/([^/]+)/?$ /blog-detail.html?slug=$1 [L,QSA,NC]
+
+# ==================== WORDPRESS RULES FOR /blog DIRECTORY ====================
+RewriteRule ^blog/index\.php$ - [L]
+
+# ✅ FIX: Check if /blog/something corresponds to a real HTML file in root
+# If /blog/google-ads exists as /google-ads.html, serve it
+RewriteCond %{REQUEST_URI} ^/blog/(.+)$
+RewriteCond %{DOCUMENT_ROOT}/%1.html -f
+RewriteRule ^blog/(.+)$ /$1 [R=301,L]
+
+# WordPress fallback - only if file doesn't exist in root
+RewriteCond %{REQUEST_URI} ^/blog/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^blog/ /blog/index.php [L]
+
+# ==================== GENERAL SITE RULES ====================
+# Redirect www → non-www
+RewriteCond %{HTTP_HOST} ^www\.viralcatmeow\.com$ [NC]
+RewriteRule ^(.*)$ https://viralcatmeow.com/$1 [R=301,L]
+
+# Redirect /index.html → /
+RewriteCond %{THE_REQUEST} /index\.html
+RewriteRule ^index\.html$ / [R=301,L]
+
+# ✅ FIX: Redirect .html → clean URLs (SKIP blogs.html, blog-detail.html, AND any /blog/ paths)
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?]
+RewriteCond %{REQUEST_URI} !^/blogs\.html$
+RewriteCond %{REQUEST_URI} !^/blog-detail\.html$
+RewriteCond %{REQUEST_URI} !^/blog/ [NC]
+RewriteRule ^(.+?)\.html$ /$1 [R=301,L]
+
+# ✅ FIX: Serve clean URLs internally (SKIP blog files AND /blog/ directory)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteCond %{REQUEST_URI} !^/blogs$
+RewriteCond %{REQUEST_URI} !^/blog-detail/
+RewriteCond %{REQUEST_URI} !^/blog/ [NC]
+RewriteRule ^([^/]+)/?$ $1.html [L]
+
+# Career Page Routing
+RewriteEngine On
+RewriteBase /
+
+# Route /careers to static HTML page
+RewriteRule ^careers/?$ /career.html [L]
+
+# Route WordPress blog
+RewriteRule ^blog/(.*)$ /blog/$1 [L]
+
+</IfModule>
