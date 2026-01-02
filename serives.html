@@ -640,7 +640,7 @@
                 if (!container || !sourceElement) return;
                 const heart = document.createElement('div');
                 heart.className = 'heart';
-                heart.innerHTML = '🖤';
+                heart.innerHTML = '';
                 const rect = sourceElement.getBoundingClientRect();
                 const containerRect = container.getBoundingClientRect();
                 heart.style.left = (rect.left - containerRect.left + rect.width / 2) + 'px';
