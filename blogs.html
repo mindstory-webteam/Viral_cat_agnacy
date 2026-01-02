@@ -1819,7 +1819,7 @@ window.addEventListener('load', function() {
         <div id="smooth-content">
             <main>
 
-                 <style>
+                <style>
         /* Blog Listing Page Styles */
         .blog-listing-wrapper {
             padding: 80px 0 120px;
@@ -1861,17 +1861,20 @@ window.addEventListener('load', function() {
             box-shadow: 0 12px 40px rgba(131, 58, 137, 0.15);
         }
         
+        /* ✅ FIXED IMAGE CONTAINER */
         .blog-card-image {
             width: 100%;
             height: 280px;
             overflow: hidden;
             position: relative;
+            background: #f0f0f0;
         }
         
         .blog-card-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
             transition: transform 0.5s ease;
         }
         
@@ -1889,37 +1892,13 @@ window.addEventListener('load', function() {
             border-radius: 25px;
             font-size: 13px;
             font-weight: 600;
+            z-index: 10;
         }
         
         .blog-card-content {
             padding: 30px;
         }
         
-
-
-
-        /* ✅ FORCE IMAGES TO DISPLAY */
-.blog-card-image {
-    width: 100% !important;
-    height: 280px !important;
-    overflow: hidden !important;
-    position: relative !important;
-    background: #f0f0f0 !important; /* Shows gray background if image fails */
-}
-
-.blog-card-image img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-/* Remove any lazy loading opacity issues */
-.blog-card-image img[loading="lazy"] {
-    opacity: 1 !important;
-}
         .blog-card-title {
             font-size: 22px;
             font-weight: 700;
@@ -1967,19 +1946,6 @@ window.addEventListener('load', function() {
             gap: 12px;
         }
         
-        .blog-card-author-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-        
-        .blog-card-author-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
         .blog-card-author-info {
             font-size: 13px;
         }
@@ -1992,14 +1958,6 @@ window.addEventListener('load', function() {
         .blog-card-date {
             font-size: 13px;
             color: #999;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .blog-card-date svg {
-            width: 14px;
-            height: 14px;
         }
         
         .blog-card-read-more {
@@ -2208,101 +2166,6 @@ window.addEventListener('load', function() {
             color: white;
         }
         
-        /* Pagination */
-        .blog-pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-top: 50px;
-        }
-        
-        .blog-pagination a,
-        .blog-pagination span {
-            min-width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            border-radius: 10px;
-            color: #333;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .blog-pagination a:hover {
-            background: linear-gradient(135deg, #f58220 0%, #833a89 100%);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(131, 58, 137, 0.3);
-        }
-        
-        .blog-pagination span.current {
-            background: linear-gradient(135deg, #f58220 0%, #833a89 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(131, 58, 137, 0.3);
-        }
-        
-        /* Loading State */
-        .loading-container {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 100px 20px;
-        }
-        
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #833a89;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* No Results */
-        .no-results {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 80px 20px;
-        }
-        
-        .no-results h3 {
-            font-size: 28px;
-            color: #833a89;
-            margin-bottom: 15px;
-        }
-        
-        .no-results p {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        
-        .no-results-btn {
-            display: inline-block;
-            padding: 14px 35px;
-            background: linear-gradient(135deg, #f58220 0%, #833a89 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .no-results-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(131, 58, 137, 0.3);
-        }
-        
         /* Filter Info Bar */
         .filter-info-bar {
             background: white;
@@ -2342,11 +2205,39 @@ window.addEventListener('load', function() {
             font-size: 14px;
             font-weight: 600;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         
         .clear-filters:hover {
             background: #e0e0e0;
             color: #333;
+        }
+        
+        /* Loading State */
+        .loading-container {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #833a89;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
         
         /* Responsive */
@@ -2375,52 +2266,9 @@ window.addEventListener('load', function() {
                 gap: 15px;
             }
         }
-        
-        @media (max-width: 480px) {
-            .blog-listing-wrapper {
-                padding: 50px 0 80px;
-            }
-            
-            .blog-card-content {
-                padding: 20px;
-            }
-        }
-
-
-
-        /* Performance optimizations */
-img {
-    content-visibility: auto;
-}
-
-.blog-card {
-    content-visibility: auto;
-    contain-intrinsic-size: 500px;
-}
-
-/* Reduce layout shift */
-.blog-card-image {
-    aspect-ratio: 16 / 9;
-}
-
-.blog-card-image img,
-.post-featured-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Smooth fade-in for images */
-img[loading="lazy"] {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-img[loading="lazy"].loaded {
-    opacity: 1;
-}
     </style>
-                    <!-- Blog Listing Section -->
+
+    <!-- Blog Listing Section -->
     <div class="blog-listing-wrapper">
         <div class="blog-listing-container" style="margin-top: 100px;">
             
@@ -2430,7 +2278,7 @@ img[loading="lazy"].loaded {
                     <span style="color: #666; font-weight: 600;">Filtering by:</span>
                     <div id="filter-badges"></div>
                 </div>
-                <a href="/blogs" class="clear-filters">Clear all filters</a>
+                <a href="#" class="clear-filters" onclick="clearFilters(event)">Clear all filters</a>
             </div>
             
             <div class="blog-content-area">
@@ -2444,9 +2292,6 @@ img[loading="lazy"].loaded {
                             <p style="color: #666;">Loading amazing content...</p>
                         </div>
                     </div>
-                    
-                    <!-- Pagination -->
-                    <div class="blog-pagination" id="blog-pagination"></div>
                 </div>
                 
                 <!-- Sidebar -->
@@ -2482,23 +2327,68 @@ img[loading="lazy"].loaded {
         </div>
     </div>
 
-  <script>
-// ==================== BLOG LISTING PAGE - CLEAN URLS ====================
+    <script>
+// ==================== BLOG LISTING PAGE - FIXED VERSION ====================
 (function() {
     'use strict';
     
     const WP_API_BASE = 'https://viralcatmeow.com/blog/wp-json/wp/v2';
     const POSTS_PER_PAGE = 6;
     
+    // State management
+    let currentFilters = {
+        category: null,
+        search: null
+    };
+    
     console.log('🚀 Blog page initialized');
-    console.log('📡 API Base:', WP_API_BASE);
+    
+    // ==================== GET URL PARAMETERS ====================
+    function getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            category: params.get('category'),
+            search: params.get('search'),
+            page: params.get('page') || 1
+        };
+    }
+    
+    // ==================== UPDATE URL ====================
+    function updateUrl(params) {
+        const url = new URL(window.location);
+        
+        // Clear existing params
+        url.search = '';
+        
+        // Add new params
+        if (params.category) url.searchParams.set('category', params.category);
+        if (params.search) url.searchParams.set('search', params.search);
+        if (params.page && params.page > 1) url.searchParams.set('page', params.page);
+        
+        window.history.pushState({}, '', url);
+    }
     
     // ==================== FETCH POSTS ====================
     async function fetchPosts(page = 1) {
         try {
-            console.log('🔍 Fetching posts from:', `${WP_API_BASE}/posts`);
+            const params = getUrlParams();
+            let url = `${WP_API_BASE}/posts?_embed&per_page=${POSTS_PER_PAGE}&page=${page}`;
             
-            const response = await fetch(`${WP_API_BASE}/posts?_embed&per_page=${POSTS_PER_PAGE}&page=${page}`);
+            // Add category filter
+            if (params.category) {
+                url += `&categories=${params.category}`;
+                currentFilters.category = params.category;
+            }
+            
+            // Add search filter
+            if (params.search) {
+                url += `&search=${encodeURIComponent(params.search)}`;
+                currentFilters.search = params.search;
+            }
+            
+            console.log('🔍 Fetching posts from:', url);
+            
+            const response = await fetch(url);
             
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -2506,7 +2396,6 @@ img[loading="lazy"].loaded {
             
             const posts = await response.json();
             console.log('✅ Posts loaded:', posts.length);
-            console.log('📦 First post data:', posts[0]);
             
             if (!posts || posts.length === 0) {
                 showNoPosts();
@@ -2514,6 +2403,7 @@ img[loading="lazy"].loaded {
             }
             
             displayPosts(posts);
+            updateFilterBar();
             
         } catch (error) {
             console.error('❌ Error fetching posts:', error);
@@ -2531,12 +2421,22 @@ img[loading="lazy"].loaded {
         }
         
         grid.innerHTML = posts.map(post => {
-            // ✅ FIXED: Better image fallback
-            const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || 
-                                 post._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes?.full?.source_url ||
-                                 'https://placehold.co/800x600/833a89/ffffff?text=Blog+Post';
+            // ✅ FIXED: Proper image extraction with multiple fallbacks
+            let featuredImage = 'https://placehold.co/800x600/833a89/ffffff?text=Blog+Post';
             
-            console.log('🖼️ Image URL for', post.title.rendered, ':', featuredImage);
+            if (post._embedded && post._embedded['wp:featuredmedia'] && post._embedded['wp:featuredmedia'][0]) {
+                const media = post._embedded['wp:featuredmedia'][0];
+                
+                // Try different image sizes in order of preference
+                if (media.media_details && media.media_details.sizes) {
+                    featuredImage = media.media_details.sizes.large?.source_url || 
+                                   media.media_details.sizes.medium_large?.source_url ||
+                                   media.media_details.sizes.medium?.source_url ||
+                                   media.source_url;
+                } else {
+                    featuredImage = media.source_url || featuredImage;
+                }
+            }
             
             const category = post._embedded?.['wp:term']?.[0]?.[0]?.name || 'Uncategorized';
             const author = post._embedded?.author?.[0]?.name || 'Admin';
@@ -2550,12 +2450,12 @@ img[loading="lazy"].loaded {
             const detailURL = `/blog-detail/${post.slug}`;
             
             return `
-                <div class="blog-card" style="cursor: pointer;" data-slug="${post.slug}">
+                <div class="blog-card" data-slug="${post.slug}">
                     <div class="blog-card-image">
                         <img src="${featuredImage}" 
                              alt="${post.title.rendered}" 
-                             loading="lazy"
-                             onerror="this.onerror=null; this.src='https://placehold.co/800x600/833a89/ffffff?text=No+Image';">
+                             loading="eager"
+                             onerror="console.error('Image failed:', this.src); this.src='https://placehold.co/800x600/833a89/ffffff?text=No+Image';">
                         <div class="blog-card-category">${category}</div>
                     </div>
                     <div class="blog-card-content">
@@ -2583,7 +2483,7 @@ img[loading="lazy"].loaded {
             `;
         }).join('');
         
-        // ✅ Add click handlers
+        // Add click handlers
         grid.querySelectorAll('.blog-card').forEach((card) => {
             card.addEventListener('click', function(e) {
                 if (e.target.tagName === 'A') return;
@@ -2598,23 +2498,6 @@ img[loading="lazy"].loaded {
         console.log('✅ Posts displayed:', posts.length);
     }
     
-
-    // ✅ FORCE IMAGES TO LOAD
-setTimeout(() => {
-    document.querySelectorAll('.blog-card-image img').forEach(img => {
-        console.log('🔧 Forcing image:', img.src);
-        img.style.display = 'block';
-        img.style.opacity = '1';
-        img.style.visibility = 'visible';
-        
-        // Force reload if not loaded
-        if (!img.complete) {
-            const src = img.src;
-            img.src = '';
-            img.src = src;
-        }
-    });
-}, 500);
     // ==================== FETCH CATEGORIES ====================
     async function fetchCategories() {
         try {
@@ -2643,26 +2526,116 @@ setTimeout(() => {
     // ==================== DISPLAY CATEGORIES ====================
     function displayCategories(categories) {
         const list = document.getElementById('categories-list');
+        const params = getUrlParams();
         
         if (!list) return;
         
-        list.innerHTML = categories.map(cat => `
-            <li>
-                <a href="/blogs?category=${cat.id}">
-                    <div style="display: flex; align-items: center;">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                            </svg>
+        list.innerHTML = categories.map(cat => {
+            const isActive = params.category == cat.id ? 'active' : '';
+            
+            return `
+                <li>
+                    <a href="#" class="${isActive}" data-category-id="${cat.id}" onclick="filterByCategory(event, ${cat.id}, '${cat.name}')">
+                        <div style="display: flex; align-items: center;">
+                            <div class="category-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                            </div>
+                            <span>${cat.name}</span>
                         </div>
-                        <span>${cat.name}</span>
-                    </div>
-                    <span class="category-count">${cat.count}</span>
-                </a>
-            </li>
-        `).join('');
+                        <span class="category-count">${cat.count}</span>
+                    </a>
+                </li>
+            `;
+        }).join('');
         
         console.log('✅ Categories displayed');
+    }
+    
+    // ==================== FILTER BY CATEGORY ====================
+    window.filterByCategory = function(event, categoryId, categoryName) {
+        event.preventDefault();
+        
+        console.log('📂 Filtering by category:', categoryName, categoryId);
+        
+        updateUrl({ category: categoryId });
+        currentFilters.category = categoryId;
+        currentFilters.categoryName = categoryName;
+        
+        fetchPosts();
+        
+        // Update active state
+        document.querySelectorAll('.categories-list a').forEach(a => a.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+    };
+    
+    // ==================== HANDLE SEARCH ====================
+    window.handleSearch = function(event) {
+        event.preventDefault();
+        
+        const searchInput = document.getElementById('search-input');
+        const searchTerm = searchInput.value.trim();
+        
+        if (!searchTerm) return;
+        
+        console.log('🔍 Searching for:', searchTerm);
+        
+        updateUrl({ search: searchTerm });
+        currentFilters.search = searchTerm;
+        
+        fetchPosts();
+    };
+    
+    // ==================== CLEAR FILTERS ====================
+    window.clearFilters = function(event) {
+        event.preventDefault();
+        
+        console.log('🧹 Clearing filters');
+        
+        currentFilters = { category: null, search: null };
+        
+        // Clear URL
+        window.history.pushState({}, '', window.location.pathname);
+        
+        // Clear search input
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) searchInput.value = '';
+        
+        // Remove active states
+        document.querySelectorAll('.categories-list a').forEach(a => a.classList.remove('active'));
+        
+        // Hide filter bar
+        const filterBar = document.getElementById('filter-info-bar');
+        if (filterBar) filterBar.style.display = 'none';
+        
+        fetchPosts();
+    };
+    
+    // ==================== UPDATE FILTER BAR ====================
+    function updateFilterBar() {
+        const filterBar = document.getElementById('filter-info-bar');
+        const filterBadges = document.getElementById('filter-badges');
+        
+        if (!filterBar || !filterBadges) return;
+        
+        let badges = '';
+        
+        if (currentFilters.search) {
+            badges += `<span class="filter-badge">Search: ${currentFilters.search}</span>`;
+        }
+        
+        if (currentFilters.category) {
+            const categoryName = currentFilters.categoryName || 'Category';
+            badges += `<span class="filter-badge">Category: ${categoryName}</span>`;
+        }
+        
+        if (badges) {
+            filterBadges.innerHTML = badges;
+            filterBar.style.display = 'flex';
+        } else {
+            filterBar.style.display = 'none';
+        }
     }
     
     // ==================== SHOW ERROR ====================
@@ -2687,8 +2660,11 @@ setTimeout(() => {
         if (grid) {
             grid.innerHTML = `
                 <div style="grid-column: 1/-1; text-align: center; padding: 80px 20px;">
-                    <h3 style="color: #833a89;">No posts found</h3>
-                    <p style="color: #666;">Check back later for new content!</p>
+                    <h3 style="color: #833a89; margin-bottom: 15px;">No posts found</h3>
+                    <p style="color: #666; margin-bottom: 20px;">Try adjusting your filters or search terms</p>
+                    <button onclick="clearFilters(event)" style="padding: 12px 30px; background: #833a89; color: white; border: none; border-radius: 25px; cursor: pointer;">
+                        Clear Filters
+                    </button>
                 </div>
             `;
         }
@@ -2697,28 +2673,32 @@ setTimeout(() => {
     // ==================== INITIALIZE ====================
     function initializeBlog() {
         console.log('✅ Initializing blog...');
+        
+        // Get URL params and set initial filters
+        const params = getUrlParams();
+        if (params.category) currentFilters.category = params.category;
+        if (params.search) {
+            currentFilters.search = params.search;
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.value = params.search;
+        }
+        
         fetchPosts();
         fetchCategories();
     }
-
-    // ✅ CRITICAL: Multiple initialization triggers
-    document.addEventListener('DOMContentLoaded', initializeBlog);
-
-    // ✅ Handle back/forward cache restore
-    window.addEventListener('pageshow', function(event) {
-        if (event.persisted) {
-            console.log('🔄 Page restored from bfcache, reloading...');
-            initializeBlog();
-        }
-    });
-
-    // ✅ Immediate execution if DOM already loaded
-    if (document.readyState !== 'loading') {
+    
+    // ✅ Multiple initialization triggers
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeBlog);
+    } else {
         initializeBlog();
     }
     
+    // Handle browser back/forward
+    window.addEventListener('popstate', initializeBlog);
+    
 })();
-</script>
+    </script>
             </main>
 
          
