@@ -1201,91 +1201,7 @@ window.addEventListener('load', function() {
         }
     </style>
 
-    <!-- Popup Structure -->
-    <div class="popup-overlay" id="myPopup">
-        <div class="popup-container">
-            <!-- Left Cat Section -->
-            <div class="popup-cat-section">
-                <svg id="popupCat" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 150 150">
-                    <!-- Left Ear -->
-                    <path id="leftEar" class="st1" d="M29.3,45.13c1.88-4.71,4.85-9.23,8.52-12.61.56-1.9.1-4.37.58-6.45.62-5.13,1.56-10.19,3.57-15.08.04-.1.1-.11.18-.05,1.12.8,2.15,1.61,3.09,2.45,2.5,1.99,4.73,4.77,7.23,6.75,7.88-4.89,11.05-.91,6.38-5.78-2.85-2.69-16.1-17.03-19.73-12.4-8.37,11.8-10.58,29.82-9.83,43.19h0Z"/>
-                    
-                    <!-- Right Ear -->
-                    <path id="rightEar" class="st1" d="M106.6,14.39c.12-.11.22-.09.29.07,1.19,2.87,2.04,5.86,2.84,8.85.02.09.1.15.18.17l6.82,1.19c-1.17-5.8-3.4-11.86-6.02-17.03-2.03-4.5-5.01-3.45-8.26-.78-5.05,3.96-10.02,8.62-13.87,13.25,14.2,2.02,7.61,3.07,18.02-5.71h0Z"/>
-                    
-                    <path class="st0" d="M65,13.79c1.11.86,2.25,2.24,3.63,3.23,5.19.63,8.82,1.33,13.85,2.06.9-.3,1.32-1.5,2.16-2.14,1.37-1.39,2.76-2.79,4.14-4.19.08-.08.04-.23-.07-.25-7.72-1.72-15.06-2.25-23.71-.78-3.17.4-1.35.53,0,2.08h0Z"/>
-                    
-                    <path class="st1" d="M131.1,34.51c-5.02-4-8.45-3.88-15.33-5.02-3.07-.45-6.14-1.04-9.2-1.5-12.74-1.88-26.36-4.34-39.4-6.06-8.54-1.17-16.89,4.19-19.46,12.43-1.74,5.51-.65,11.56-.93,17.26-.67,14.61,16.01,23.38,28.55,17.27-10.74.1-21.1-.67-24.72-12.88-.94-5.2-.23-10.69-.43-15.9.16-6.64,5.02-13.05,11.74-13.95,8.23-.44,13.75,1.66,24.63,3.01,6.11,1.33,34.04,4.51,39.32,6.78,5.44,2.49,8.51,8.48,8.25,14.34-.25,2.27.41,11.59-.28,13.65-1.69,7.85-9.21,10.57-16.56,8.71,2.48,1.52,4.93,2.87,7.87,3.11,7.53.29,13-7.25,12.82-14.4-.04-9.43,1.57-20.47-6.87-26.85h0Z"/>
-                    
-                    <!-- Left Eye -->
-                    <g class="eye-container left-eye-container" data-eye="left">
-                        <ellipse class="eye-white" cx="68.05" cy="43.03" rx="7" ry="8"/>
-                        <circle class="pupil" id="leftPupil" cx="68.05" cy="43.03" r="3.5"/>
-                    </g>
-                    
-                    <!-- Right Eye -->
-                    <g class="eye-container right-eye-container" data-eye="right">
-                        <ellipse class="eye-white" cx="117.96" cy="46.15" rx="7" ry="8"/>
-                        <circle class="pupil" id="rightPupil" cx="117.96" cy="46.15" r="3.5"/>
-                    </g>
-                    
-                    <!-- Closed eyes curves -->
-                    <path class="closed-eye left-closed" d="M 64 43 Q 68 45 72 43"/>
-                    <path class="closed-eye right-closed" d="M 114 46 Q 118 48 122 46"/>
-                    
-                    <path class="st1" d="M62.47,76.29c-22.89-1.23-24.89-30.42-18.08-46.73-1.47,1.53-2.64,3.23-3.5,5.11-7.38,4.79-7.56,14.17-7.15,21.93-1.14,15.8,15.77,23.78,28.73,19.7h0Z"/>
-                    
-                    <path class="st0" d="M129.9,81.04c.12,10.93-2.98,21.94-9.16,31.02-2.79,4.14-5.48,7.27-9.82,11.31-.29.27-.54.28-.54.77.12,1.99-.26,7.46-.26,10.15,18.74-12.74,30.26-36.59,27.16-58.93-1.8,2.7-4.79,4.2-7.39,5.68Z"/>
-                    
-                    <path class="st1" d="M96.43,114.96c9.95-3.96,20.16-11.7,24.43-21.97-1.64-2.16-4.17-3.11-6.45-4.3-1.47-.69-.99-3.2.61-3.38,2.27.07,5.54,2.56,7.25,3.89.65-2.07,1.1-4.82.92-6.94-17.56.21-13.94-19.31-28.88-18.41-4.66.18-7.29,4.36-10.63,7.11-5.5,4.41-11.37,6.5-17.99,8.48-8.22,2.1-18.34,2.69-25.76-2.23-1.87,4.62-1.94,10.77-1.48,15.85,1.92,18.71,16.78,33.03,32.93,40.68-.59-.81-2.77-1.88-3.81-2.83-1.59-1.42-7.11-4.94-5.21-6.94.67-.32,1.35-.21,2.02.3,1.91,1.97,3.39,3.38,4.43,4.25,5.53,4.92,11.97,8.7,18.01,12.59,3.47,2.35,6.91,4.7,9.51,7.84.8-.69,1.36-2.02,1.97-3.01,5.41-10.32,7.74-22.08,4.92-33.52-2.04.55-4.79,2.07-6.79,2.52h-.01ZM67.64,86.29c-.08,1.47-4.66,2.07-6.2,3.06-1.84.6-4.92,3.38-5.73.29-.15-1.35.56-1.98,1.67-2.49,2.01-.91,4.11-1.77,6.29-2.6,1.53-.82,4.41-.71,3.97,1.74ZM96.18,88.61c-3.19,5.92-12.31,6.21-16.13.7-.65-.81-1.28-2.41-.56-3.36,2.82-2.84,3.55,2.12,6.02,2.77,4,1.83,8.4-1.31,8.81-5.53.39-3.42-3.42-5.07-4.52-7.93-.48-1.25-.2-2.79,1.08-3.44,2.32-1.19,4.13.56,6.09,1.39,1.47.82,3.89-.53,5.13-.5,1.82-.1,3.32,1.77,2.54,3.53-1.24,2.49-4.6,3.63-5.21,6.5-.39,2.02.24,4.24,1.62,5.74,1.61,1.82,4.35,1.51,5.59-.56.95-1.55,2.93-.92,3.31.64.37,1.37-.89,2.63-1.8,3.41-4.49,3.61-9.69,1.23-11.95-3.37h-.01Z"/>
-                    
-                    <!-- Tail -->
-                    <path id="tailOrange" class="st0" d="M50.73,131.38c-23.17-11.5-35.45-39.31-29.15-64.26.58-3.37,2.44-7.05,3.41-10.85-.68-3.12-.93-5.27-1.09-8.51-.19-1.06-.07-4.06-.4-3.42-2.1,3.01-3.95,5.84-5.54,9.31-21.21,44.4,16.42,98.85,65.36,90.73-5.64-3.21-11.59-6.05-17.76-7.99-4.86-1.77-10.19-2.6-14.84-5h0Z"/>
-                </svg>
-            </div>
-            
-            <!-- Right Form Section -->
-            <div class="popup-form-section">
-                <button class="popup-close" onclick="closePopup()">&times;</button>
-                
-                <div class="popup-header">
-                    <h2>Get in Touch</h2>
-                </div>
-                
-                <div class="popup-content">
-                    <form id="contactForm" onsubmit="handleFormSubmit(event)">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="name">Name *</label>
-                                <input type="text" id="name" name="name" required placeholder="Enter your name" data-eye-target="left">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="email">Email ID *</label>
-                                <input type="email" id="email" name="email" required placeholder="Enter your email" data-eye-target="right">
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone">Phone Number *</label>
-                            <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number" data-eye-target="center">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea id="description" name="description" rows="3" placeholder="Tell us more about your inquiry" data-eye-target="center"></textarea>
-                        </div>
-                        
-                        <div class="popup-actions">
-                            <button type="button" class="popup-btn popup-btn-secondary" onclick="closePopup()">Cancel</button>
-                            <button type="submit" class="popup-btn popup-btn-primary">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
+   
     <script>
         // Eye tracking and interaction
         const popupCat = document.getElementById('popupCat');
@@ -1874,27 +1790,25 @@ window.addEventListener('load', function() {
                     <ul class="tp-submenu">
                         <li><a href="./about-us.html">About Us</a></li>
                            <li><a href="./blogs.html">Blogs</a></li>
-                           <li><a href="./casestudy.html"> Case Studies</a></li> 
-                           
+                           <li><a href="./casestudy.html">Case Studies</a></li>
                     </ul>
                 </li>
                 <li class="has-dropdown">
                     <a href="#">Services</a>
                     <ul class="tp-submenu">
-                        <li><a href="./search-engine-optimization.html">SEO</a></li>
-                        <li><a href="./social-media-marketing.html">SMM Service</a></li>
-                        <li><a href="./googleads.html">Google Ads Service</a></li>
-                        <li><a href="./website-development.html">Website Development</a></li>
-                        <li><a href="./visual-production.html">Visual Production</a></li>
-                        <li><a href="./branding.html">Branding</a></li>
+                        <li><a href="/search-engine-optimization.html">SEO</a></li>
+                        <li><a href="/social-media-marketing.html">SMM Service</a></li>
+                        <li><a href="/googleads.html">Google Ads Service</a></li>
+                        <li><a href="/website-development.html">Website Development</a></li>
+                        <li><a href="/visual-production.html">Visual Production</a></li>
+                        <li><a href="/branding.html">Branding</a></li>
                     </ul>
                 </li>
                 <li class="has-dropdown">
                     <a href="#">Contact</a>
                     <ul class="tp-submenu">
-                        <li><a href="./contact.html">Contact</a></li>
-                       
-                           <li><a href="./career.html">Career</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="./career.html">Career</a></li>
                     </ul>
                 </li>
             </ul>
@@ -1913,8 +1827,7 @@ window.addEventListener('load', function() {
                     <ul class="tp-submenu">
                         <li><a href="./about-us.html">About Us</a></li>
                         <li><a href="./blogs.html">Blogs</a></li>
-                        <li><a href="./casestudy.html"> Case Studies</a></li> 
-                         
+                        <li><a href="./casestudy.html">Case Studies</a></li>
                     </ul>
                 </li>
                 <li class="has-dropdown">
@@ -1922,7 +1835,7 @@ window.addEventListener('load', function() {
                     <ul class="tp-submenu">
                         <li><a href="./search-engine-optimization.html">SEO</a></li>
                         <li><a href="./social-media-marketing.html">SMM Service</a></li>
-                        <li><a href="./googleads.html">Google Ads Service</a></li>
+                        <li><a href="./google-ads.html">Google Ads Service</a></li>
                         <li><a href="./website-development.html">Website Development</a></li>
                         <li><a href="./visual-production.html">Visual Production</a></li>
                         <li><a href="./branding.html">Branding</a></li>
@@ -1932,8 +1845,7 @@ window.addEventListener('load', function() {
                     <a href="#">Contact</a>
                     <ul class="tp-submenu">
                         <li><a href="./contact.html">Contact</a></li>
-                      
-                           <li><a href="./career.html">Career</a></li>
+                         <li><a href="./career.html">Career</a></li>
                     </ul>
                 </li>
             </ul>
@@ -1951,7 +1863,6 @@ window.addEventListener('load', function() {
         </div>
     </div>
 </header>
-
 <!-- Put this at the END of your <body>, right before </body> -->
 <script>
 (function() {
@@ -2436,55 +2347,51 @@ Our team specialises in building well-structured Google AdWords campaigns focuse
                     </div>
                 </div>
                 <!-- ovareview area end -->
-
 <!-- case study section start -->
 <section class="cs-case-study-wrapper">
 
-    <!-- Results Metrics -->
    
-
     <!-- Campaign Objectives -->
     <div class="cs-objectives-area ptb-100">
         <div class="container container-1230">
             <div class="cs-section-head text-center mb-60">
-               
-                 <h4 class="tp-section-title"><a class="tp_text_invert" > Campaign Objectives</a></h4>
-                <p class="cs-heading-desc">Clear goals for measurable success</p>
+                <h4 class="tp-section-title"><a class="tp_text_invert" > Campaign Objectives</a></h4>
+                <p class="cs-heading-desc">Strategic goals for maximum festival impact</p>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-40">
                     <div class="cs-objective-item cs_fade_bottom">
-                        <div class="cs-obj-icon">📢</div>
-                        <h4 class="cs-obj-title">Awareness Campaigns</h4>
-                        <p class="cs-obj-desc">Increase brand visibility across Kerala</p>
+                        <div class="cs-obj-icon">🎯</div>
+                        <h4 class="cs-obj-title">Brand Awareness</h4>
+                        <p class="cs-obj-desc">Increase overall brand awareness for the festival</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-40">
                     <div class="cs-objective-item cs_fade_bottom">
-                        <div class="cs-obj-icon">🚀</div>
-                        <h4 class="cs-obj-title">Traffic Campaigns</h4>
-                        <p class="cs-obj-desc">Improve profile visits and attract potential followers</p>
+                        <div class="cs-obj-icon">📱</div>
+                        <h4 class="cs-obj-title">Profile Visits</h4>
+                        <p class="cs-obj-desc">Drive maximum Instagram profile visits</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-40">
                     <div class="cs-objective-item cs_fade_bottom">
-                        <div class="cs-obj-icon">✨</div>
-                        <h4 class="cs-obj-title">Premium Aesthetic</h4>
-                        <p class="cs-obj-desc">Build a premium identity through consistent visuals</p>
+                        <div class="cs-obj-icon">👥</div>
+                        <h4 class="cs-obj-title">Follower Growth</h4>
+                        <p class="cs-obj-desc">Improve follower count before the event</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-40">
                     <div class="cs-objective-item cs_fade_bottom">
-                        <div class="cs-obj-icon">📈</div>
-                        <h4 class="cs-obj-title">Organic Growth</h4>
-                        <p class="cs-obj-desc">Drive more followers and boost reel engagement</p>
+                        <div class="cs-obj-icon">⚡</div>
+                        <h4 class="cs-obj-title">Build Hype</h4>
+                        <p class="cs-obj-desc">Build curiosity, hype, and excitement for Onam Fest</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-40">
                     <div class="cs-objective-item cs_fade_bottom">
-                        <div class="cs-obj-icon">💡</div>
-                        <h4 class="cs-obj-title">Brand Curiosity</h4>
-                        <p class="cs-obj-desc">Create curiosity around Kerala traditional wear</p>
+                        <div class="cs-obj-icon">⭐</div>
+                        <h4 class="cs-obj-title">Premium Positioning</h4>
+                        <p class="cs-obj-desc">Position the page as a trusted and premium event brand</p>
                     </div>
                 </div>
             </div>
@@ -2495,45 +2402,44 @@ Our team specialises in building well-structured Google AdWords campaigns focuse
     <div class="cs-challenges-area ptb-100">
         <div class="container container-1230">
             <div class="cs-section-head text-center mb-60">
+                <h4 class="tp-section-title"><a class="tp_text_invert" > Challenges</a></h4>
               
-
-                 <h4 class="tp-section-title"><a class="tp_text_invert" >Challenges</a></h4>
-                <p class="cs-heading-desc">Obstacles we needed to overcome</p>
+                <p class="cs-heading-desc">Key obstacles in a time-sensitive campaign</p>
             </div>
             <div class="cs-challenges-list-wrap">
                 <div class="cs-challenge-row cs_fade_left">
                     <div class="cs-challenge-num">01</div>
                     <div class="cs-challenge-text-wrap">
-                        <h4 class="cs-challenge-title">Limited Social Presence</h4>
-                        <p class="cs-challenge-desc">Limited social media presence compared to competitors</p>
+                        <h4 class="cs-challenge-title">Limited Timeline</h4>
+                        <p class="cs-challenge-desc">Very short project period (22 Aug – 9 Sep)</p>
                     </div>
                 </div>
                 <div class="cs-challenge-row cs_fade_left">
                     <div class="cs-challenge-num">02</div>
                     <div class="cs-challenge-text-wrap">
-                        <h4 class="cs-challenge-title">Unclear Branding</h4>
-                        <p class="cs-challenge-desc">Product quality was high, but branding was not clearly communicated</p>
+                        <h4 class="cs-challenge-title">Seasonal Event</h4>
+                        <p class="cs-challenge-desc">Seasonal event — audience interest is time-bound</p>
                     </div>
                 </div>
                 <div class="cs-challenge-row cs_fade_left">
                     <div class="cs-challenge-num">03</div>
                     <div class="cs-challenge-text-wrap">
-                        <h4 class="cs-challenge-title">Low Engagement</h4>
-                        <p class="cs-challenge-desc">Low engagement on existing posts; lack of aesthetic storytelling</p>
+                        <h4 class="cs-challenge-title">Low Organic Reach</h4>
+                        <p class="cs-challenge-desc">Page had low organic reach before management</p>
                     </div>
                 </div>
                 <div class="cs-challenge-row cs_fade_left">
                     <div class="cs-challenge-num">04</div>
                     <div class="cs-challenge-text-wrap">
-                        <h4 class="cs-challenge-title">Audience Disconnect</h4>
-                        <p class="cs-challenge-desc">Youth audience not connecting emotionally with the brand</p>
+                        <h4 class="cs-challenge-title">Fast Results Needed</h4>
+                        <p class="cs-challenge-desc">Needed fast, impactful results within 1 month</p>
                     </div>
                 </div>
                 <div class="cs-challenge-row cs_fade_left">
                     <div class="cs-challenge-num">05</div>
                     <div class="cs-challenge-text-wrap">
-                        <h4 class="cs-challenge-title">Visual Limitations</h4>
-                        <p class="cs-challenge-desc">Difficulty showcasing fabric texture, color accuracy, and craftsmanship through simple photos</p>
+                        <h4 class="cs-challenge-title">Regional Targeting</h4>
+                        <p class="cs-challenge-desc">Regional audience — required precise Kerala/Thrissur targeting</p>
                     </div>
                 </div>
             </div>
@@ -2544,55 +2450,58 @@ Our team specialises in building well-structured Google AdWords campaigns focuse
     <div class="cs-approach-area ptb-100">
         <div class="container container-1230">
             <div class="cs-section-head text-center mb-60">
-             
-                <h4 class="tp-section-title"><a class="tp_text_invert" >Our Approach</a></h4>
-                <p class="cs-heading-desc">A two-level strategy focused on awareness + traffic growth</p>
+                 <h4 class="tp-section-title"><a class="tp_text_invert" > Our Approach</a></h4>
+              
+                <p class="cs-heading-desc">A dual strategic plan to maximize visibility in a short timeline</p>
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-sm-12 mb-40">
                     <div class="cs-approach-card cs_fade_bottom">
                         <div class="cs-approach-num">01</div>
-                        <h3 class="cs-approach-heading">Awareness Campaigns</h3>
+                        <h3 class="cs-approach-heading">Awareness Ads</h3>
                         <ul class="cs-approach-points">
-                            <li>Wide reach campaigns targeting Kerala audiences interested in culture, fashion, and traditional wear</li>
-                            <li>Used short aesthetic reels to generate attention</li>
-                            <li>Highlighted fabric texture, color kara, and Kerala vibes</li>
-                            <li>Focused on brand recall through consistent visuals</li>
+                            <li>Boost visibility across Thrissur & Kerala</li>
+                            <li>Reach people interested in festivals, Onam, food stalls, shopping, flowers & family events</li>
+                            <li>Build strong brand recall using consistent creative themes</li>
+                            <li>Significantly improved reach & impressions, making the event visible to thousands</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12 col-sm-12 mb-40">
                     <div class="cs-approach-card cs_fade_bottom">
                         <div class="cs-approach-num">02</div>
-                        <h3 class="cs-approach-heading">Traffic Campaigns</h3>
+                        <h3 class="cs-approach-heading">Profile Traffic Ads</h3>
                         <ul class="cs-approach-points">
                             <li>Drive users directly to the Instagram profile</li>
-                            <li>Optimized landing destination for profile visit + follow intent</li>
-                            <li>Used clean catalogue-style creatives to make the brand look premium</li>
-                            <li>Ensured CTA-driven ads to boost profile actions</li>
+                            <li>Convert visitors into followers</li>
+                            <li>Highlight major festival elements like shows, stalls & attractions</li>
+                            <li>Generated high-quality profile visits and increased page growth</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12 col-sm-12 mb-40">
                     <div class="cs-approach-card cs_fade_bottom">
                         <div class="cs-approach-num">03</div>
-                        <h3 class="cs-approach-heading">Aesthetic Content Strategy</h3>
+                        <h3 class="cs-approach-heading">Content Strategy</h3>
                         <ul class="cs-approach-points">
-                            <li>Minimalist photography</li>
-                            <li>Kerala-inspired reels</li>
-                            <li>Close-up texture shots</li>
-                            <li>Onam/Vishu–themed color mood presentation</li>
+                            <li>Festival creatives</li>
+                            <li>Event teasers</li>
+                            <li>Reels for organic boost</li>
+                            <li>Aesthetic visual grid</li>
+                            <li>Daily updates</li>
+                            <li>Ensured steady audience engagement throughout the month</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12 col-sm-12 mb-40">
                     <div class="cs-approach-card cs_fade_bottom">
                         <div class="cs-approach-num">04</div>
-                        <h3 class="cs-approach-heading">Engagement Boosting</h3>
+                        <h3 class="cs-approach-heading">Engagement Strategy</h3>
                         <ul class="cs-approach-points">
-                            <li>Polls, question stickers, and story-based content</li>
-                            <li>Highlight updates: Collections, New Arrivals, Fabric Quality, Testimonials</li>
-                            <li>Simple Malayalam captions to increase relatability</li>
+                            <li>Story polls, countdowns & Q&A</li>
+                            <li>Festival highlight sections</li>
+                            <li>Interactive elements to build community excitement</li>
+                            <li>Increased user interaction and helped the page appear more active and trustworthy</li>
                         </ul>
                     </div>
                 </div>
@@ -2601,13 +2510,12 @@ Our team specialises in building well-structured Google AdWords campaigns focuse
     </div>
 
    
-
 </section>
 <!-- case study section end -->
 
 <style>
 /* ==========================================
-   CASE STUDY SECTION - CLEAN & OPTIMIZED
+   CASE STUDY SECTION - THRISSUR ONAM FEST
    ========================================== */
 
 /* Utility Classes */
@@ -2644,7 +2552,7 @@ Our team specialises in building well-structured Google AdWords campaigns focuse
    METRICS AREA
    ========================================== */
 .cs-metrics-area {
-    background: #fff;
+    background: #f7f7f7;
 }
 
 .cs-metric-box {
@@ -2701,10 +2609,80 @@ Our team specialises in building well-structured Google AdWords campaigns focuse
 }
 
 /* ==========================================
+   ABOUT AREA
+   ========================================== */
+.cs-about-area {
+    background: #fff;
+}
+
+.cs-about-content-wrap h2.cs-content-title {
+    font-size: 42px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+}
+
+.cs-brand-name {
+    font-size: 32px;
+    color: #FF6B35;
+    margin: 20px 0;
+    font-weight: 600;
+}
+
+.cs-text-para {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.cs-features-list {
+    background: #f7f7f7;
+    padding: 25px 30px;
+    border-radius: 15px;
+    margin: 25px 0;
+}
+
+.cs-features-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.cs-features-list ul li {
+    padding-left: 25px;
+    position: relative;
+    font-size: 15px;
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+.cs-features-list ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #FF6B35;
+    font-weight: 700;
+}
+
+.cs-placeholder-img {
+    background: #f7f7f7;
+    border-radius: 20px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+/* ==========================================
    OBJECTIVES AREA
    ========================================== */
 .cs-objectives-area {
-    background: #ffff;
+    background: #f7f7f7;
 }
 
 .cs-objective-item {
@@ -3010,7 +2988,7 @@ Our team specialises in building well-structured Google AdWords campaigns focuse
 
 <script>
 /* ==========================================
-   CASE STUDY JAVASCRIPT - CLEAN & OPTIMIZED
+   CASE STUDY JAVASCRIPT - THRISSUR ONAM FEST
    ========================================== */
 (function() {
     'use strict';
@@ -3033,7 +3011,7 @@ Our team specialises in building well-structured Google AdWords campaigns focuse
         }, observerOptions);
 
         // Observe all animated elements
-        const animatedElements = document.querySelectorAll('.cs_fade_bottom, .cs_fade_left');
+        const animatedElements = document.querySelectorAll('.cs_fade_bottom, .cs_fade_left, .cs_fade_right');
         animatedElements.forEach(function(el) {
             observer.observe(el);
         });
