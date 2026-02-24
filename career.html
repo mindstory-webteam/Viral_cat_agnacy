@@ -2441,7 +2441,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <div class="job-title-display" id="jobTitleDisplay"></div>
                     </div>
                     
-                    <form id="contactForm" action="https://formspree.io/f/mjkqelak" method="POST">
+                    <form id="contactForm" action="submit.php" method="POST">
                         <input type="hidden" id="position" name="position">
                         
                         <!-- ROW 1: Name and Email -->
@@ -2844,24 +2844,28 @@ function showThankYouMessage() {
 // Form Submission
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    const submitBtn = this.querySelector('button[type="submit"]');
+
+    const form = this;
+    const submitBtn = form.querySelector('button[type="submit"]');
+
     submitBtn.innerHTML = 'Sending...';
     submitBtn.disabled = true;
-    
-    fetch('https://formspree.io/f/mjkqelak', {
+
+    const formData = new FormData(form);
+
+    fetch('submit.php', {
         method: 'POST',
-        body: new FormData(this),
-        headers: { 'Accept': 'application/json' }
+        body: formData
     })
-    .then(response => {
-        if (response.ok) {
-            showThankYouMessage();
-        } else {
-            alert('Error submitting application');
-        }
+    .then(response => response.text())
+    .then(data => {
+        console.log(data);
+        showThankYouMessage();
     })
-    .catch(() => alert('Error submitting application'))
+    .catch(error => {
+        console.error(error);
+        alert('Error submitting application');
+    })
     .finally(() => {
         submitBtn.innerHTML = 'Submit Application';
         submitBtn.disabled = false;
