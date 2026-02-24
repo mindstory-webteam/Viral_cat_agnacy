@@ -20,7 +20,7 @@ $isContactForm = isset($_POST['description']);
 $isJobForm     = isset($_POST['experience']) || isset($_POST['cv_link']) || isset($_POST['position']);
 $isMessageForm = isset($_POST['message']) && !$isContactForm && !$isJobForm;
 
-$to = "hello@viralcatmeow.com";
+$to = "janavalsan@mindstory.in";
 
 // ======================
 // FORM 1 – CONTACT FORM
