@@ -2449,13 +2449,14 @@ img[loading="lazy"].loaded {
         </div>
     </div>
 
-  <script>
+<script>
 // ==================== BLOG LISTING PAGE - CLEAN URLS ====================
 (function() {
     'use strict';
     
     const WP_API_BASE = 'https://viralcatmeow.com/blog/wp-json/wp/v2';
     const POSTS_PER_PAGE = 6;
+    let currentPage = 1;
     
     console.log('🚀 Blog page initialized');
     console.log('📡 API Base:', WP_API_BASE);
@@ -2463,7 +2464,8 @@ img[loading="lazy"].loaded {
     // ==================== FETCH POSTS ====================
     async function fetchPosts(page = 1) {
         try {
-            console.log('🔍 Fetching posts from:', `${WP_API_BASE}/posts`);
+            currentPage = page;
+            console.log('🔍 Fetching posts from:', `${WP_API_BASE}/posts`, 'page:', page);
             
             const response = await fetch(`${WP_API_BASE}/posts?_embed&per_page=${POSTS_PER_PAGE}&page=${page}`);
             
@@ -2471,9 +2473,11 @@ img[loading="lazy"].loaded {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
             
+            const totalPages = parseInt(response.headers.get('X-WP-TotalPages') || '1', 10);
+            const totalPosts = parseInt(response.headers.get('X-WP-Total') || '0', 10);
+            
             const posts = await response.json();
-            console.log('✅ Posts loaded:', posts.length);
-            console.log('📦 First post data:', posts[0]);
+            console.log('✅ Posts loaded:', posts.length, `(page ${page}/${totalPages}, total: ${totalPosts})`);
             
             if (!posts || posts.length === 0) {
                 showNoPosts();
@@ -2481,11 +2485,51 @@ img[loading="lazy"].loaded {
             }
             
             displayPosts(posts);
+            renderPagination(totalPages, page);
+            
+            document.getElementById('blog-posts-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             
         } catch (error) {
             console.error('❌ Error fetching posts:', error);
             showError(error.message);
         }
+    }
+    
+    // ==================== RENDER PAGINATION ====================
+    function renderPagination(totalPages, page) {
+        const container = document.getElementById('blog-pagination');
+        if (!container) return;
+        
+        if (totalPages <= 1) {
+            container.innerHTML = '';
+            return;
+        }
+        
+        let html = '';
+        
+        html += page > 1
+            ? `<a href="#" data-page="${page - 1}">&laquo;</a>`
+            : `<span style="opacity:.4;pointer-events:none;">&laquo;</span>`;
+        
+        for (let i = 1; i <= totalPages; i++) {
+            html += i === page
+                ? `<span class="current">${i}</span>`
+                : `<a href="#" data-page="${i}">${i}</a>`;
+        }
+        
+        html += page < totalPages
+            ? `<a href="#" data-page="${page + 1}">&raquo;</a>`
+            : `<span style="opacity:.4;pointer-events:none;">&raquo;</span>`;
+        
+        container.innerHTML = html;
+        
+        container.querySelectorAll('a[data-page]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const p = parseInt(this.getAttribute('data-page'), 10);
+                fetchPosts(p);
+            });
+        });
     }
     
     // ==================== DISPLAY POSTS ====================
@@ -2498,7 +2542,6 @@ img[loading="lazy"].loaded {
         }
         
         grid.innerHTML = posts.map(post => {
-            // ✅ FIXED: Better image fallback
             const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || 
                                  post._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes?.full?.source_url ||
                                  'https://placehold.co/800x600/833a89/ffffff?text=Blog+Post';
@@ -2550,7 +2593,6 @@ img[loading="lazy"].loaded {
             `;
         }).join('');
         
-        // ✅ Add click handlers
         grid.querySelectorAll('.blog-card').forEach((card) => {
             card.addEventListener('click', function(e) {
                 if (e.target.tagName === 'A') return;
@@ -2563,25 +2605,23 @@ img[loading="lazy"].loaded {
         });
         
         console.log('✅ Posts displayed:', posts.length);
+        
+        // ✅ FORCE IMAGES TO LOAD (moved inside displayPosts so it re-runs on every page change)
+        setTimeout(() => {
+            document.querySelectorAll('.blog-card-image img').forEach(img => {
+                img.style.display = 'block';
+                img.style.opacity = '1';
+                img.style.visibility = 'visible';
+                
+                if (!img.complete) {
+                    const src = img.src;
+                    img.src = '';
+                    img.src = src;
+                }
+            });
+        }, 500);
     }
     
-
-    // ✅ FORCE IMAGES TO LOAD
-setTimeout(() => {
-    document.querySelectorAll('.blog-card-image img').forEach(img => {
-        console.log('🔧 Forcing image:', img.src);
-        img.style.display = 'block';
-        img.style.opacity = '1';
-        img.style.visibility = 'visible';
-        
-        // Force reload if not loaded
-        if (!img.complete) {
-            const src = img.src;
-            img.src = '';
-            img.src = src;
-        }
-    });
-}, 500);
     // ==================== FETCH CATEGORIES ====================
     async function fetchCategories() {
         try {
@@ -2664,7 +2704,7 @@ setTimeout(() => {
     // ==================== INITIALIZE ====================
     function initializeBlog() {
         console.log('✅ Initializing blog...');
-        fetchPosts();
+        fetchPosts(1);
         fetchCategories();
     }
 
