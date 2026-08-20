@@ -254,13 +254,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (leadFormHero.querySelector("input[name='POTENTIALCF7']")) leadFormHero.querySelector("input[name='POTENTIALCF7']").value = urlParams.get('utm_campaign') || '';
       if (leadFormHero.querySelector("input[name='POTENTIALCF6']")) leadFormHero.querySelector("input[name='POTENTIALCF6']").value = urlParams.get('utm_content') || '';
 
-      // Submit to Server-side Relay (Hostinger PHP cURL -> Bigin CRM)
-      const heroFormData = new FormData(leadFormHero);
-      fetch('landing-assets/submit-enquiry.php', {
-        method: 'POST',
-        body: heroFormData
-      }).catch(err => console.warn('Server relay notice:', err));
-
       // Submit to Google Sheets
       submitToGoogleSheet({
         name,
@@ -402,13 +395,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (leadFormBottom.querySelector("input[name='POTENTIALCF5']")) leadFormBottom.querySelector("input[name='POTENTIALCF5']").value = urlParams.get('utm_source') || '';
       if (leadFormBottom.querySelector("input[name='POTENTIALCF7']")) leadFormBottom.querySelector("input[name='POTENTIALCF7']").value = urlParams.get('utm_campaign') || '';
       if (leadFormBottom.querySelector("input[name='POTENTIALCF6']")) leadFormBottom.querySelector("input[name='POTENTIALCF6']").value = urlParams.get('utm_content') || '';
-
-      // Submit to Server-side Relay (Hostinger PHP cURL -> Bigin CRM)
-      const bottomFormData = new FormData(leadFormBottom);
-      fetch('landing-assets/submit-enquiry.php', {
-        method: 'POST',
-        body: bottomFormData
-      }).catch(err => console.warn('Server relay notice:', err));
 
       // Submit to Google Sheets
       submitToGoogleSheet({
@@ -555,13 +541,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (popupForm.querySelector("input[name='POTENTIALCF5']")) popupForm.querySelector("input[name='POTENTIALCF5']").value = urlParams.get('utm_source') || '';
       if (popupForm.querySelector("input[name='POTENTIALCF7']")) popupForm.querySelector("input[name='POTENTIALCF7']").value = urlParams.get('utm_campaign') || '';
       if (popupForm.querySelector("input[name='POTENTIALCF6']")) popupForm.querySelector("input[name='POTENTIALCF6']").value = urlParams.get('utm_content') || '';
-
-      // Submit to Server-side Relay (Hostinger PHP cURL -> Bigin CRM)
-      const popupFormData = new FormData(popupForm);
-      fetch('landing-assets/submit-enquiry.php', {
-        method: 'POST',
-        body: popupFormData
-      }).catch(err => console.warn('Server relay notice:', err));
 
       // Submit to Google Sheets
       submitToGoogleSheet({
