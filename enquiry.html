@@ -15,6 +15,7 @@
   
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="landing-assets/css/style.css">
+
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -105,7 +106,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               <a href="#bottom-lead-section" class="hero-cta">
                 Book a Free Strategy Call &nbsp;→
               </a>
-              <!-- <p class="hero-trust-note">⭐ 4.9 rated · No commitment · 100% free audit</p> -->
             </div>
 
           </div>
@@ -114,59 +114,95 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <div class="hero-right">
             <div class="lead-form-card">
               <h2 class="form-title">Find Out What's Holding Your Ads Back</h2>
-              <form class="lead-form" id="lead-form-hero" novalidate>
+              <form class="lead-form" id="lead-form-hero" method="POST" action="https://bigin.zoho.in/crm/WebToContactForm" enctype="multipart/form-data" accept-charset="UTF-8" novalidate>
+                <!-- Zoho Bigin Hidden Fields -->
+                <input type="text" style="display:none;" name="xnQsjsdp" value="df6019184df08796c1a91db16e478b0a14cff22218603a5d981eba7ee175b28d"/>
+                <input type="hidden" name="zc_gad" id="zc_gad_hero" value=""/>
+                <input type="text" style="display:none;" name="xmIwtLD" value="235b3502e9e4ee06e0fc8c4f84bd0ac1c0b2ba25833a02a3deead44c1f7830f9eb7d7342f0047ac74ca078e300307e4d"/>
+                <input type="text" style="display:none;" name="actionType" value="UG90ZW50aWFscw=="/>
+                <input type="text" style="display:none;" name="returnURL" value="null"/>
+                <input type="text" style="display:none;" name="POTENTIALCF4" value=""/>
+                <input type="text" style="display:none;" name="POTENTIALCF5" value=""/>
+                <input type="text" style="display:none;" name="POTENTIALCF7" value=""/>
+                <input type="text" style="display:none;" name="POTENTIALCF6" value=""/>
+                <input type="text" style="display:none;" name="Pipeline" value="Sales Pipeline Standard 1"/>
+                <input type="text" style="display:none;" name="Stage" value="Qualification"/>
+                <input type="text" style="display:none;" name="Lead Source" value="Official Website"/>
+
                 <input
                   id="hero-name"
                   type="text"
-                  name="name"
-                  placeholder="Your Name"
+                  name="Potential Name"
+                  placeholder="Your Name *"
                   class="form-input"
                   required
                 >
                 <input
-                  id="hero-email"
-                  type="email"
-                  name="email"
-                  placeholder="Email ID"
+                  id="hero-company"
+                  type="text"
+                  name="Accounts.Account Name"
+                  placeholder="Your Company / Brand Name *"
                   class="form-input"
                   required
                 >
                 <input
                   id="hero-phone"
                   type="tel"
-                  name="phone"
-                  placeholder="Phone Number"
+                  name="Contacts.Mobile"
+                  placeholder="Phone Number *"
                   class="form-input"
                   required
                 >
                 <input
-                  id="hero-brand"
-                  type="text"
-                  name="brand"
-                  placeholder="Your brand/company name"
+                  id="hero-email"
+                  type="email"
+                  name="Contacts.Email"
+                  placeholder="Email Address *"
                   class="form-input"
+                  required
                 >
                 <select
-                  id="hero-budget"
-                  name="budget"
+                  id="hero-service"
+                  name="POTENTIALCF1"
                   class="form-input form-select"
+                  required
                 >
-                  <option value="">Your current marketing budget (optional)</option>
-                  <option value="Below ₹50,000/month">Below ₹50,000/month</option>
-                  <option value="₹50,000 - ₹1,00,000/month">₹50,000 - ₹1,00,000/month</option>
-                  <option value="₹1,00,000 - ₹5,00,000/month">₹1,00,000 - ₹5,00,000/month</option>
-                  <option value="Above ₹5,00,000/month">Above ₹5,00,000/month</option>
+                  <option value="-None-">Service Interested In? *</option>
+                  <option value="Digital Marketing">Digital Marketing</option>
+                  <option value="SEO">SEO</option>
+                  <option value="Website Development">Website Development</option>
+                  <option value="Video Production">Video Production</option>
+                  <option value="Influencer Marketing">Influencer Marketing</option>
+                  <option value="AI Videos">AI Videos</option>
                 </select>
-                <input
-                  id="hero-website"
-                  type="text"
-                  name="website"
-                  placeholder="Your website/URL (optional)"
-                  class="form-input"
+                <select
+                  id="hero-budget"
+                  name="POTENTIALCF3"
+                  class="form-input form-select"
+                  required
                 >
+                  <option value="-None-">Monthly/Project Budget *</option>
+                  <option value="Below ₹25K">Below ₹25K</option>
+                  <option value="₹25K–₹50K">₹25K–₹50K</option>
+                  <option value="₹50K–₹1L">₹50K–₹1L</option>
+                  <option value="₹1L–₹3L">₹1L–₹3L</option>
+                  <option value="₹3L+">₹3L+</option>
+                </select>
+                <select
+                  id="hero-timeline"
+                  name="POTENTIALCF2"
+                  class="form-input form-select"
+                  required
+                >
+                  <option value="-None-">When do you want to start? *</option>
+                  <option value="Immediately">Immediately</option>
+                  <option value="Within 30 days">Within 30 days</option>
+                  <option value="1–3 months">1–3 months</option>
+                  <option value="Just Exploring">Just Exploring</option>
+                </select>
                 <textarea
                   id="hero-description"
-                  name="description"
+                  name="Description"
                   placeholder="Tell us about your goals (optional)"
                   class="form-input form-textarea"
                   rows="3"
@@ -176,7 +212,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   <span class="error-text"></span>
                 </div>
                 <button type="submit" class="form-submit-btn">
-                  Submit
+                  Submit Request
                 </button>
               </form>
             </div>
@@ -251,8 +287,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
 
         <div class="works-grid">
-
-
           <!-- Work 2: IFRST -->
           <div class="work-card fade-in-up">
             <div class="work-image-container">
@@ -269,7 +303,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </div>
           </div>
 
-                    <!-- Work 1: Automotives -->
+          <!-- Work 1: Automotives -->
           <div class="work-card fade-in-up">
             <div class="work-image-container">
               <img src="landing-assets/assets/work_automotive.png" alt="Automobile showroom lead campaign mockup" class="work-image" loading="lazy">
@@ -652,29 +686,43 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <p class="bottom-form-subtitle">Leave your details below, and our experts will customize a result-oriented digital plan for your brand.</p>
           <div class="title-underline"></div>
           
-          <form class="lead-form bottom-lead-form" id="lead-form-bottom" novalidate>
+          <form class="lead-form bottom-lead-form" id="lead-form-bottom" method="POST" action="https://bigin.zoho.in/crm/WebToContactForm" enctype="multipart/form-data" accept-charset="UTF-8" novalidate>
+            <!-- Zoho Bigin Hidden Fields -->
+            <input type="text" style="display:none;" name="xnQsjsdp" value="df6019184df08796c1a91db16e478b0a14cff22218603a5d981eba7ee175b28d"/>
+            <input type="hidden" name="zc_gad" id="zc_gad_bottom" value=""/>
+            <input type="text" style="display:none;" name="xmIwtLD" value="235b3502e9e4ee06e0fc8c4f84bd0ac1c0b2ba25833a02a3deead44c1f7830f9eb7d7342f0047ac74ca078e300307e4d"/>
+            <input type="text" style="display:none;" name="actionType" value="UG90ZW50aWFscw=="/>
+            <input type="text" style="display:none;" name="returnURL" value="null"/>
+            <input type="text" style="display:none;" name="POTENTIALCF4" value=""/>
+            <input type="text" style="display:none;" name="POTENTIALCF5" value=""/>
+            <input type="text" style="display:none;" name="POTENTIALCF7" value=""/>
+            <input type="text" style="display:none;" name="POTENTIALCF6" value=""/>
+            <input type="text" style="display:none;" name="Pipeline" value="Sales Pipeline Standard 1"/>
+            <input type="text" style="display:none;" name="Stage" value="Qualification"/>
+            <input type="text" style="display:none;" name="Lead Source" value="Official Website"/>
+
             <div class="form-row-three">
               <input
                 id="bottom-name"
                 type="text"
-                name="name"
-                placeholder="Your Name"
+                name="Potential Name"
+                placeholder="Your Name *"
                 class="form-input"
                 required
               >
               <input
-                id="bottom-email"
-                type="email"
-                name="email"
-                placeholder="Email ID"
+                id="bottom-company"
+                type="text"
+                name="Accounts.Account Name"
+                placeholder="Company / Brand Name *"
                 class="form-input"
                 required
               >
               <input
                 id="bottom-phone"
                 type="tel"
-                name="phone"
-                placeholder="Phone Number"
+                name="Contacts.Mobile"
+                placeholder="Phone Number *"
                 class="form-input"
                 required
               >
@@ -682,36 +730,61 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             
             <div class="form-row-three">
               <input
-                id="bottom-brand"
-                type="text"
-                name="brand"
-                placeholder="Your brand/company name"
+                id="bottom-email"
+                type="email"
+                name="Contacts.Email"
+                placeholder="Email Address *"
                 class="form-input"
+                required
               >
               <select
-                id="bottom-budget"
-                name="budget"
+                id="bottom-service"
+                name="POTENTIALCF1"
                 class="form-input form-select"
+                required
               >
-                <option value="">Your current marketing budget (optional)</option>
-                <option value="Below ₹50,000/month">Below ₹50,000/month</option>
-                <option value="₹50,000 - ₹1,00,000/month">₹50,000 - ₹1,00,000/month</option>
-                <option value="₹1,00,000 - ₹5,00,000/month">₹1,00,000 - ₹5,00,000/month</option>
-                <option value="Above ₹5,00,000/month">Above ₹5,00,000/month</option>
+                <option value="-None-">Service Interested In? *</option>
+                <option value="Digital Marketing">Digital Marketing</option>
+                <option value="SEO">SEO</option>
+                <option value="Website Development">Website Development</option>
+                <option value="Video Production">Video Production</option>
+                <option value="Influencer Marketing">Influencer Marketing</option>
+                <option value="AI Videos">AI Videos</option>
               </select>
-              <input
-                id="bottom-website"
-                type="text"
-                name="website"
-                placeholder="Your website/URL (optional)"
-                class="form-input"
+              <select
+                id="bottom-budget"
+                name="POTENTIALCF3"
+                class="form-input form-select"
+                required
               >
+                <option value="-None-">Monthly/Project Budget *</option>
+                <option value="Below ₹25K">Below ₹25K</option>
+                <option value="₹25K–₹50K">₹25K–₹50K</option>
+                <option value="₹50K–₹1L">₹50K–₹1L</option>
+                <option value="₹1L–₹3L">₹1L–₹3L</option>
+                <option value="₹3L+">₹3L+</option>
+              </select>
+            </div>
+
+            <div class="form-row-three" style="grid-template-columns: 1fr;">
+              <select
+                id="bottom-timeline"
+                name="POTENTIALCF2"
+                class="form-input form-select"
+                required
+              >
+                <option value="-None-">When do you want to start? *</option>
+                <option value="Immediately">Immediately</option>
+                <option value="Within 30 days">Within 30 days</option>
+                <option value="1–3 months">1–3 months</option>
+                <option value="Just Exploring">Just Exploring</option>
+              </select>
             </div>
             
             <textarea
               id="bottom-description"
-              name="description"
-              placeholder="Tell us about your goals (optional)"
+              name="Description"
+              placeholder="Tell us about your goals / requirement (optional)"
               class="form-input form-textarea"
               rows="4"
             ></textarea>
@@ -808,7 +881,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <div class="popup-overlay" id="myPopup">
     <div class="popup-container">
 
-
       <!-- Right Form Section -->
       <div class="popup-form-section">
         <button class="popup-close" id="popup-close-btn" aria-label="Close popup">&times;</button>
@@ -816,46 +888,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <h2>Get in Touch</h2>
         </div>
         <div class="popup-content" id="popup-content-body">
-          <form class="lead-form" id="popupForm" novalidate>
+          <form class="lead-form" id="popupForm" method="POST" action="https://bigin.zoho.in/crm/WebToContactForm" enctype="multipart/form-data" accept-charset="UTF-8" novalidate>
+            <!-- Zoho Bigin Hidden Fields -->
+            <input type="text" style="display:none;" name="xnQsjsdp" value="df6019184df08796c1a91db16e478b0a14cff22218603a5d981eba7ee175b28d"/>
+            <input type="hidden" name="zc_gad" id="zc_gad_popup" value=""/>
+            <input type="text" style="display:none;" name="xmIwtLD" value="235b3502e9e4ee06e0fc8c4f84bd0ac1c0b2ba25833a02a3deead44c1f7830f9eb7d7342f0047ac74ca078e300307e4d"/>
+            <input type="text" style="display:none;" name="actionType" value="UG90ZW50aWFscw=="/>
+            <input type="text" style="display:none;" name="returnURL" value="null"/>
+            <input type="text" style="display:none;" name="POTENTIALCF4" value=""/>
+            <input type="text" style="display:none;" name="POTENTIALCF5" value=""/>
+            <input type="text" style="display:none;" name="POTENTIALCF7" value=""/>
+            <input type="text" style="display:none;" name="POTENTIALCF6" value=""/>
+            <input type="text" style="display:none;" name="Pipeline" value="Sales Pipeline Standard 1"/>
+            <input type="text" style="display:none;" name="Stage" value="Qualification"/>
+            <input type="text" style="display:none;" name="Lead Source" value="Official Website"/>
+
             <div class="form-row">
               <div class="form-group">
                 <label for="popup-name">Name *</label>
-                <input type="text" id="popup-name" name="name" required placeholder="Enter your name" class="form-input">
+                <input type="text" id="popup-name" name="Potential Name" required placeholder="Enter your name" class="form-input">
               </div>
               <div class="form-group">
-                <label for="popup-email">Email ID *</label>
-                <input type="email" id="popup-email" name="email" required placeholder="Enter your email" class="form-input">
+                <label for="popup-brand">Brand/Company Name *</label>
+                <input type="text" id="popup-brand" name="Accounts.Account Name" required placeholder="Your brand/company name" class="form-input">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
                 <label for="popup-phone">Phone Number *</label>
-                <input type="tel" id="popup-phone" name="phone" required placeholder="Enter your phone number" class="form-input">
+                <input type="tel" id="popup-phone" name="Contacts.Mobile" required placeholder="Enter your phone number" class="form-input">
               </div>
               <div class="form-group">
-                <label for="popup-brand">Brand/Company Name</label>
-                <input type="text" id="popup-brand" name="brand" placeholder="Your brand/company name" class="form-input">
+                <label for="popup-email">Email ID *</label>
+                <input type="email" id="popup-email" name="Contacts.Email" required placeholder="Enter your email" class="form-input">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label for="popup-budget">Marketing Budget (optional)</label>
-                <select id="popup-budget" name="budget" class="form-input form-select">
-                  <option value="">Your current marketing budget (optional)</option>
-                  <option value="Below ₹50,000/month">Below ₹50,000/month</option>
-                  <option value="₹50,000 - ₹1,00,000/month">₹50,000 - ₹1,00,000/month</option>
-                  <option value="₹1,00,000 - ₹5,00,000/month">₹1,00,000 - ₹5,00,000/month</option>
-                  <option value="Above ₹5,00,000/month">Above ₹5,00,000/month</option>
+                <label for="popup-service">Service Interested In *</label>
+                <select id="popup-service" name="POTENTIALCF1" class="form-input form-select" required>
+                  <option value="">Select a service</option>
+                  <option value="Digital Marketing">Digital Marketing</option>
+                  <option value="SEO">SEO</option>
+                  <option value="Website Development">Website Development</option>
+                  <option value="Video Production">Video Production</option>
+                  <option value="Influencer Marketing">Influencer Marketing</option>
+                  <option value="AI Videos">AI Videos</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="popup-website">Website/URL</label>
-                <input type="text" id="popup-website" name="website" placeholder="Your website/URL (optional)" class="form-input">
+                <label for="popup-budget">Marketing Budget *</label>
+                <select id="popup-budget" name="POTENTIALCF3" class="form-input form-select" required>
+                  <option value="">Select budget</option>
+                  <option value="Below ₹25K">Below ₹25K</option>
+                  <option value="₹25K–₹50K">₹25K–₹50K</option>
+                  <option value="₹50K–₹1L">₹50K–₹1L</option>
+                  <option value="₹1L–₹3L">₹1L–₹3L</option>
+                  <option value="₹3L+">₹3L+</option>
+                </select>
               </div>
             </div>
             <div class="form-group">
-              <label for="popup-description">Description</label>
-              <textarea id="popup-description" name="description" rows="3" placeholder="Tell us more about your goals (optional)" class="form-input"></textarea>
+              <label for="popup-timeline">When do you want to start? *</label>
+              <select id="popup-timeline" name="POTENTIALCF2" class="form-input form-select" required>
+                <option value="">Select timeline</option>
+                <option value="Immediately">Immediately</option>
+                <option value="Within 30 days">Within 30 days</option>
+                <option value="1–3 months">1–3 months</option>
+                <option value="Just Exploring">Just Exploring</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="popup-description">Description / Requirement (optional)</label>
+              <textarea id="popup-description" name="Description" rows="3" placeholder="Tell us more about your goals (optional)..." class="form-input"></textarea>
             </div>
             
             <div class="form-error-msg" id="popup-form-error" style="display: none;">
@@ -872,6 +977,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </div>
     </div>
   </div>
+
+  <!-- Hidden iframe for seamless Bigin submission without page reload / redirection -->
+  <iframe name="bigin_hidden_iframe" id="bigin_hidden_iframe" style="display:none;" tabindex="-1"></iframe>
 
   <!-- Floating Contact Buttons -->
   <div class="floating-contact-container">
@@ -911,6 +1019,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </svg>
     </a>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Auto-populate UTM and Lead Page URL across all forms
+      var currentUrl = window.location.href;
+      var urlParams = new URLSearchParams(window.location.search);
+      var utmSource = urlParams.get('utm_source') || '';
+      var utmCampaign = urlParams.get('utm_campaign') || '';
+      var utmContent = urlParams.get('utm_content') || '';
+
+      document.querySelectorAll("input[name='POTENTIALCF4']").forEach(function(el) { el.value = currentUrl; });
+      document.querySelectorAll("input[name='POTENTIALCF5']").forEach(function(el) { el.value = utmSource; });
+      document.querySelectorAll("input[name='POTENTIALCF7']").forEach(function(el) { el.value = utmCampaign; });
+      document.querySelectorAll("input[name='POTENTIALCF6']").forEach(function(el) { el.value = utmContent; });
+    });
+  </script>
 
   <!-- Scripts -->
   <script src="landing-assets/js/form-submission.js"></script>
