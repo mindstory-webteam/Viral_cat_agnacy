@@ -254,7 +254,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (leadFormHero.querySelector("input[name='POTENTIALCF7']")) leadFormHero.querySelector("input[name='POTENTIALCF7']").value = urlParams.get('utm_campaign') || '';
       if (leadFormHero.querySelector("input[name='POTENTIALCF6']")) leadFormHero.querySelector("input[name='POTENTIALCF6']").value = urlParams.get('utm_content') || '';
 
-      // Submit to Google Sheets
+      // Submit to Google Sheets and redirect to Thank You page
+      let redirected = false;
+      const doRedirect = () => {
+        if (!redirected) {
+          redirected = true;
+          window.location.href = 'thank-you.html';
+        }
+      };
+
       submitToGoogleSheet({
         name,
         company,
@@ -265,34 +273,10 @@ document.addEventListener("DOMContentLoaded", () => {
         timeline,
         description,
         source: 'Hero Form'
-      });
+      }).then(doRedirect).catch(doRedirect);
 
-      // Show in-place success confirmation without destroying the form from the DOM
-      leadFormHero.style.display = "none";
-      const card = leadFormHero.closest(".lead-form-card");
-      if (card) {
-        const formTitle = card.querySelector(".form-title");
-        if (formTitle) formTitle.style.display = "none";
-
-        let successDiv = card.querySelector(".form-success-container");
-        if (!successDiv) {
-          successDiv = document.createElement("div");
-          successDiv.className = "form-success-container";
-          successDiv.style.textAlign = "center";
-          successDiv.style.padding = "40px 20px";
-          successDiv.style.animation = "fadeIn 0.4s ease forwards";
-          successDiv.innerHTML = `
-            <div style="font-size: 52px; color: var(--orange); margin-bottom: 20px;">✓</div>
-            <h2 style="font-size: 22px; font-weight: 800; color: #111; margin-bottom: 12px; line-height: 1.3;">
-              All Set!
-            </h2>
-            <p style="color: #555; font-size: 14.5px; line-height: 1.6; max-width: 290px; margin: 0 auto;">
-              Thanks, <strong>${name}</strong>. We've logged your request and will contact you shortly to review your ad setup.
-            </p>
-          `;
-          card.appendChild(successDiv);
-        }
-      }
+      // Safety fallback timeout
+      setTimeout(doRedirect, 1200);
     });
 
     ["hero-name", "hero-company", "hero-phone", "hero-email", "hero-service", "hero-budget", "hero-timeline", "hero-description"].forEach(id => {
@@ -396,7 +380,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (leadFormBottom.querySelector("input[name='POTENTIALCF7']")) leadFormBottom.querySelector("input[name='POTENTIALCF7']").value = urlParams.get('utm_campaign') || '';
       if (leadFormBottom.querySelector("input[name='POTENTIALCF6']")) leadFormBottom.querySelector("input[name='POTENTIALCF6']").value = urlParams.get('utm_content') || '';
 
-      // Submit to Google Sheets
+      // Submit to Google Sheets and redirect to Thank You page
+      let redirected = false;
+      const doRedirect = () => {
+        if (!redirected) {
+          redirected = true;
+          window.location.href = 'thank-you.html';
+        }
+      };
+
       submitToGoogleSheet({
         name,
         company,
@@ -407,38 +399,10 @@ document.addEventListener("DOMContentLoaded", () => {
         timeline,
         description: desc,
         source: 'Bottom Lead Form'
-      });
+      }).then(doRedirect).catch(doRedirect);
 
-      // Show in-place success confirmation without destroying the form from the DOM
-      leadFormBottom.style.display = "none";
-      const card = leadFormBottom.closest(".bottom-form-card");
-      if (card) {
-        const bottomTitle = card.querySelector(".bottom-form-title");
-        const bottomSubtitle = card.querySelector(".bottom-form-subtitle");
-        const titleUnderline = card.querySelector(".title-underline");
-        if (bottomTitle) bottomTitle.style.display = "none";
-        if (bottomSubtitle) bottomSubtitle.style.display = "none";
-        if (titleUnderline) titleUnderline.style.display = "none";
-
-        let successDiv = card.querySelector(".form-success-container");
-        if (!successDiv) {
-          successDiv = document.createElement("div");
-          successDiv.className = "form-success-container";
-          successDiv.style.textAlign = "center";
-          successDiv.style.padding = "40px 20px";
-          successDiv.style.animation = "fadeIn 0.4s ease forwards";
-          successDiv.innerHTML = `
-            <div style="font-size: 60px; color: var(--orange); margin-bottom: 20px;">✓</div>
-            <h2 style="font-size: 26px; font-weight: 800; color: #111; margin-bottom: 12px; line-height: 1.3;">
-              Form Submitted!
-            </h2>
-            <p style="color: #555; font-size: 16px; line-height: 1.6; max-width: 450px; margin: 0 auto;">
-              Thank you, <strong>${name}</strong>. Our digital strategy team will analyze your business requirements and contact you within 24 hours.
-            </p>
-          `;
-          card.appendChild(successDiv);
-        }
-      }
+      // Safety fallback timeout
+      setTimeout(doRedirect, 1200);
     });
 
     ["bottom-name", "bottom-company", "bottom-phone", "bottom-email", "bottom-service", "bottom-budget", "bottom-timeline", "bottom-description"].forEach(id => {
@@ -542,7 +506,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (popupForm.querySelector("input[name='POTENTIALCF7']")) popupForm.querySelector("input[name='POTENTIALCF7']").value = urlParams.get('utm_campaign') || '';
       if (popupForm.querySelector("input[name='POTENTIALCF6']")) popupForm.querySelector("input[name='POTENTIALCF6']").value = urlParams.get('utm_content') || '';
 
-      // Submit to Google Sheets
+      // Submit to Google Sheets and redirect to Thank You page
+      let redirected = false;
+      const doRedirect = () => {
+        if (!redirected) {
+          redirected = true;
+          window.location.href = 'thank-you.html';
+        }
+      };
+
       submitToGoogleSheet({
         name,
         company,
@@ -553,39 +525,10 @@ document.addEventListener("DOMContentLoaded", () => {
         timeline,
         description: desc,
         source: 'Popup Form'
-      });
+      }).then(doRedirect).catch(doRedirect);
 
-      // Show in-place success confirmation without destroying the form from the DOM
-      popupForm.style.display = "none";
-      const formBody = document.getElementById("popup-content-body");
-      if (formBody) {
-        let successDiv = formBody.querySelector(".popup-success-container");
-        if (!successDiv) {
-          successDiv = document.createElement("div");
-          successDiv.className = "popup-success-container";
-          successDiv.style.textAlign = "center";
-          successDiv.style.padding = "30px 10px";
-          successDiv.style.animation = "fadeIn 0.4s ease forwards";
-          successDiv.innerHTML = `
-            <div style="font-size: 52px; color: var(--purple); margin-bottom: 16px;">✓</div>
-            <h3 style="color: var(--purple); font-size: 22px; font-weight: 800; margin: 0 0 10px 0; line-height: 1.3;">
-              Thank You!
-            </h3>
-            <p style="color: #555; font-size: 14.5px; line-height: 1.6; margin-bottom: 20px;">
-              Your message has been sent. We'll be in touch shortly.
-            </p>
-            <button onclick="window.closePopup()" class="popup-btn popup-btn-primary" style="margin-top: 4px;">
-              Close
-            </button>
-          `;
-          formBody.appendChild(successDiv);
-        }
-      }
-
-      // Close popup after 4 seconds
-      setTimeout(() => {
-        window.closePopup();
-      }, 4000);
+      // Safety fallback timeout
+      setTimeout(doRedirect, 1200);
     });
 
     ["popup-name", "popup-brand", "popup-phone", "popup-email", "popup-service", "popup-budget", "popup-timeline", "popup-description"].forEach(id => {
