@@ -254,6 +254,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (leadFormHero.querySelector("input[name='POTENTIALCF7']")) leadFormHero.querySelector("input[name='POTENTIALCF7']").value = urlParams.get('utm_campaign') || '';
       if (leadFormHero.querySelector("input[name='POTENTIALCF6']")) leadFormHero.querySelector("input[name='POTENTIALCF6']").value = urlParams.get('utm_content') || '';
 
+      // Submit to Server-side Relay (Hostinger PHP cURL -> Bigin CRM)
+      const heroFormData = new FormData(leadFormHero);
+      fetch('submit-enquiry.php', {
+        method: 'POST',
+        body: heroFormData
+      }).catch(err => console.warn('Server relay notice:', err));
+
       // Submit to Google Sheets
       submitToGoogleSheet({
         name,
@@ -267,7 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
         source: 'Hero Form'
       });
 
-      // Submit to Bigin silently without redirecting
+      // Submit to Bigin silently as client fallback
       leadFormHero.target = "bigin_hidden_iframe";
       leadFormHero.submit();
 
@@ -400,6 +407,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (leadFormBottom.querySelector("input[name='POTENTIALCF7']")) leadFormBottom.querySelector("input[name='POTENTIALCF7']").value = urlParams.get('utm_campaign') || '';
       if (leadFormBottom.querySelector("input[name='POTENTIALCF6']")) leadFormBottom.querySelector("input[name='POTENTIALCF6']").value = urlParams.get('utm_content') || '';
 
+      // Submit to Server-side Relay (Hostinger PHP cURL -> Bigin CRM)
+      const bottomFormData = new FormData(leadFormBottom);
+      fetch('submit-enquiry.php', {
+        method: 'POST',
+        body: bottomFormData
+      }).catch(err => console.warn('Server relay notice:', err));
+
       // Submit to Google Sheets
       submitToGoogleSheet({
         name,
@@ -413,7 +427,7 @@ document.addEventListener("DOMContentLoaded", () => {
         source: 'Bottom Lead Form'
       });
 
-      // Submit to Bigin silently without redirecting
+      // Submit to Bigin silently as client fallback
       leadFormBottom.target = "bigin_hidden_iframe";
       leadFormBottom.submit();
 
@@ -550,6 +564,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (popupForm.querySelector("input[name='POTENTIALCF7']")) popupForm.querySelector("input[name='POTENTIALCF7']").value = urlParams.get('utm_campaign') || '';
       if (popupForm.querySelector("input[name='POTENTIALCF6']")) popupForm.querySelector("input[name='POTENTIALCF6']").value = urlParams.get('utm_content') || '';
 
+      // Submit to Server-side Relay (Hostinger PHP cURL -> Bigin CRM)
+      const popupFormData = new FormData(popupForm);
+      fetch('submit-enquiry.php', {
+        method: 'POST',
+        body: popupFormData
+      }).catch(err => console.warn('Server relay notice:', err));
+
       // Submit to Google Sheets
       submitToGoogleSheet({
         name,
@@ -563,7 +584,7 @@ document.addEventListener("DOMContentLoaded", () => {
         source: 'Popup Form'
       });
 
-      // Submit to Bigin silently without redirecting
+      // Submit to Bigin silently as client fallback
       popupForm.target = "bigin_hidden_iframe";
       popupForm.submit();
 
