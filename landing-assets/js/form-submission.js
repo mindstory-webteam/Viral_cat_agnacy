@@ -22,20 +22,24 @@ window.submitToGoogleSheet = (data) => {
       formData.append(key, data[key] != null ? data[key] : "");
     }
 
-    fetch(GOOGLE_SHEET_WEBAPP_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: formData.toString()
-    })
-    .then(() => {
+    try {
+      fetch(GOOGLE_SHEET_WEBAPP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        keepalive: true,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: formData.toString()
+      })
+      .then(() => {
+        setTimeout(resolve, 400);
+      })
+      .catch((error) => {
+        setTimeout(resolve, 400);
+      });
+    } catch (err) {
       resolve();
-    })
-    .catch((error) => {
-      // Resolve anyway so the UI transition still completes for the user
-      resolve();
-    });
+    }
   });
 };
