@@ -256,7 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Submit to Server-side Relay (Hostinger PHP cURL -> Bigin CRM)
       const heroFormData = new FormData(leadFormHero);
-      fetch('submit-enquiry.php', {
+      fetch('landing-assets/submit-enquiry.php', {
         method: 'POST',
         body: heroFormData
       }).catch(err => console.warn('Server relay notice:', err));
@@ -409,7 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Submit to Server-side Relay (Hostinger PHP cURL -> Bigin CRM)
       const bottomFormData = new FormData(leadFormBottom);
-      fetch('submit-enquiry.php', {
+      fetch('landing-assets/submit-enquiry.php', {
         method: 'POST',
         body: bottomFormData
       }).catch(err => console.warn('Server relay notice:', err));
@@ -566,7 +566,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Submit to Server-side Relay (Hostinger PHP cURL -> Bigin CRM)
       const popupFormData = new FormData(popupForm);
-      fetch('submit-enquiry.php', {
+      fetch('landing-assets/submit-enquiry.php', {
         method: 'POST',
         body: popupFormData
       }).catch(err => console.warn('Server relay notice:', err));

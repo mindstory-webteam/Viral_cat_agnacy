@@ -63,6 +63,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
 curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
+curl_setopt($ch, CURLOPT_REFERER, $pageUrl);
 
 $biginResponse = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -70,19 +71,22 @@ $curlError = curl_error($ch);
 curl_close($ch);
 
 // Log submission status
-$logEntry = date('Y-m-d H:i:s') . " | Name: $name | Email: $email | Phone: $phone | HTTP: $httpCode\n";
+$logEntry = date('Y-m-d H:i:s')
+    . " | Name: $name | Email: $email | Phone: $phone"
+    . " | HTTP: $httpCode | cURL Error: $curlError"
+    . " | Response: " . substr(trim((string)$biginResponse), 0, 500) . "\n";
 @file_put_contents(__DIR__ . '/bigin_submissions.log', $logEntry, FILE_APPEND);
 
-// Bigin returns 302 or 200 on successful receipt
-if ($httpCode === 200 || $httpCode === 302) {
+if (($httpCode === 200 || $httpCode === 302) && stripos((string)$biginResponse, 'error') === false) {
     echo json_encode([
         'status' => 'success',
         'message' => 'Lead successfully submitted to Bigin CRM'
     ]);
 } else {
+    http_response_code(502);
     echo json_encode([
-        'status' => 'success',
-        'message' => 'Lead received',
+        'status' => 'error',
+        'message' => 'Bigin submission failed',
         'debug_code' => $httpCode
     ]);
 }
