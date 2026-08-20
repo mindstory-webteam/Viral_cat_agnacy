@@ -274,10 +274,6 @@ document.addEventListener("DOMContentLoaded", () => {
         source: 'Hero Form'
       });
 
-      // Submit to Bigin silently as client fallback
-      leadFormHero.target = "bigin_hidden_iframe";
-      leadFormHero.submit();
-
       // Show in-place success confirmation without destroying the form from the DOM
       leadFormHero.style.display = "none";
       const card = leadFormHero.closest(".lead-form-card");
@@ -426,10 +422,6 @@ document.addEventListener("DOMContentLoaded", () => {
         description: desc,
         source: 'Bottom Lead Form'
       });
-
-      // Submit to Bigin silently as client fallback
-      leadFormBottom.target = "bigin_hidden_iframe";
-      leadFormBottom.submit();
 
       // Show in-place success confirmation without destroying the form from the DOM
       leadFormBottom.style.display = "none";
@@ -583,10 +575,6 @@ document.addEventListener("DOMContentLoaded", () => {
         description: desc,
         source: 'Popup Form'
       });
-
-      // Submit to Bigin silently as client fallback
-      popupForm.target = "bigin_hidden_iframe";
-      popupForm.submit();
 
       // Show in-place success confirmation without destroying the form from the DOM
       popupForm.style.display = "none";

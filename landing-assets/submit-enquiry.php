@@ -9,25 +9,38 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Extract form data
-$name        = trim($_POST['Potential_Name'] ?? $_POST['Potential Name'] ?? $_POST['name'] ?? '');
-$company     = trim($_POST['Accounts_Account_Name'] ?? $_POST['Accounts.Account Name'] ?? $_POST['company'] ?? '');
-$phone       = trim($_POST['Contacts_Mobile'] ?? $_POST['Contacts.Mobile'] ?? $_POST['phone'] ?? '');
-$email       = trim($_POST['Contacts_Email'] ?? $_POST['Contacts.Email'] ?? $_POST['email'] ?? '');
-$service     = trim($_POST['POTENTIALCF1'] ?? $_POST['service'] ?? '');
-$budget      = trim($_POST['POTENTIALCF3'] ?? $_POST['budget'] ?? '');
-$timeline    = trim($_POST['POTENTIALCF2'] ?? $_POST['timeline'] ?? '');
-$description = trim($_POST['Description'] ?? $_POST['description'] ?? '');
+// Parse input from POST or JSON raw input
+$rawInput = file_get_contents('php://input');
+$jsonData = json_decode($rawInput, true);
+$data = is_array($jsonData) ? $jsonData : $_POST;
 
-$pageUrl     = trim($_POST['POTENTIALCF4'] ?? $_POST['page_url'] ?? $_SERVER['HTTP_REFERER'] ?? 'https://viralcatmeow.com/enquiry.html');
-$utmSource   = trim($_POST['POTENTIALCF5'] ?? $_POST['utm_source'] ?? '');
-$utmCampaign = trim($_POST['POTENTIALCF7'] ?? $_POST['utm_campaign'] ?? '');
-$utmContent  = trim($_POST['POTENTIALCF6'] ?? $_POST['utm_content'] ?? '');
+if (empty($data) && !empty($rawInput)) {
+    parse_str($rawInput, $data);
+}
+
+// Extract form data with extensive fallbacks
+$name        = trim($data['Potential_Name'] ?? $data['Potential Name'] ?? $data['PotentialName'] ?? $data['name'] ?? $data['full_name'] ?? '');
+$company     = trim($data['Accounts_Account_Name'] ?? $data['Accounts.Account Name'] ?? $data['Accounts_AccountName'] ?? $data['company'] ?? $data['brand'] ?? '');
+$phone       = trim($data['Contacts_Mobile'] ?? $data['Contacts.Mobile'] ?? $data['Contacts_Mobile'] ?? $data['phone'] ?? $data['mobile'] ?? '');
+$email       = trim($data['Contacts_Email'] ?? $data['Contacts.Email'] ?? $data['email'] ?? '');
+$service     = trim($data['POTENTIALCF1'] ?? $data['service'] ?? '');
+$budget      = trim($data['POTENTIALCF3'] ?? $data['budget'] ?? '');
+$timeline    = trim($data['POTENTIALCF2'] ?? $data['timeline'] ?? '');
+$description = trim($data['Description'] ?? $data['description'] ?? $data['message'] ?? '');
+
+$pageUrl     = trim($data['POTENTIALCF4'] ?? $data['page_url'] ?? $_SERVER['HTTP_REFERER'] ?? 'https://viralcatmeow.com/enquiry.html');
+$utmSource   = trim($data['POTENTIALCF5'] ?? $data['utm_source'] ?? '');
+$utmCampaign = trim($data['POTENTIALCF7'] ?? $data['utm_campaign'] ?? '');
+$utmContent  = trim($data['POTENTIALCF6'] ?? $data['utm_content'] ?? '');
 
 // Basic validation for required fields
 if (empty($name) || empty($company) || empty($phone) || empty($email)) {
     http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'Missing required fields']);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Missing required fields',
+        'received' => array_keys($data)
+    ]);
     exit;
 }
 
