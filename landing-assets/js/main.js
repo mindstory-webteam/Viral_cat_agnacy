@@ -163,6 +163,181 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 10000);
   });
 
+  // ─── COUNTRY CODE PICKER DATA & INITIALIZER ─────────────
+  const COUNTRIES_DATA = [
+    { iso: "in", fl: "🇮🇳", ds: "India", dial: "+91" },
+    { iso: "ae", fl: "🇦🇪", ds: "United Arab Emirates", dial: "+971" },
+    { iso: "sa", fl: "🇸🇦", ds: "Saudi Arabia", dial: "+966" },
+    { iso: "qa", fl: "🇶🇦", ds: "Qatar", dial: "+974" },
+    { iso: "kw", fl: "🇰🇼", ds: "Kuwait", dial: "+965" },
+    { iso: "om", fl: "🇴🇲", ds: "Oman", dial: "+968" },
+    { iso: "bh", fl: "🇧🇭", ds: "Bahrain", dial: "+973" },
+    { iso: "gb", fl: "🇬🇧", ds: "United Kingdom", dial: "+44" },
+    { iso: "us", fl: "🇺🇸", ds: "United States", dial: "+1" },
+    { iso: "ca", fl: "🇨🇦", ds: "Canada", dial: "+1" },
+    { iso: "au", fl: "🇦🇺", ds: "Australia", dial: "+61" },
+    { iso: "sg", fl: "🇸🇬", ds: "Singapore", dial: "+65" },
+    { iso: "my", fl: "🇲🇾", ds: "Malaysia", dial: "+60" },
+    { iso: "de", fl: "🇩🇪", ds: "Germany", dial: "+49" },
+    { iso: "fr", fl: "🇫🇷", ds: "France", dial: "+33" },
+    { iso: "it", fl: "🇮🇹", ds: "Italy", dial: "+39" },
+    { iso: "es", fl: "🇪🇸", ds: "Spain", dial: "+34" },
+    { iso: "nl", fl: "🇳🇱", ds: "Netherlands", dial: "+31" },
+    { iso: "se", fl: "🇸🇪", ds: "Sweden", dial: "+46" },
+    { iso: "ch", fl: "🇨🇭", ds: "Switzerland", dial: "+41" },
+    { iso: "nz", fl: "🇳🇿", ds: "New Zealand", dial: "+64" },
+    { iso: "ie", fl: "🇮🇪", ds: "Ireland", dial: "+353" },
+    { iso: "za", fl: "🇿🇦", ds: "South Africa", dial: "+27" },
+    { iso: "pk", fl: "🇵🇰", ds: "Pakistan", dial: "+92" },
+    { iso: "bd", fl: "🇧🇩", ds: "Bangladesh", dial: "+880" },
+    { iso: "lk", fl: "🇱🇰", ds: "Sri Lanka", dial: "+94" },
+    { iso: "np", fl: "🇳🇵", ds: "Nepal", dial: "+977" },
+    { iso: "ph", fl: "🇵🇭", ds: "Philippines", dial: "+63" },
+    { iso: "id", fl: "🇮🇩", ds: "Indonesia", dial: "+62" },
+    { iso: "th", fl: "🇹🇭", ds: "Thailand", dial: "+66" },
+    { iso: "vn", fl: "🇻🇳", ds: "Vietnam", dial: "+84" },
+    { iso: "eg", fl: "🇪🇬", ds: "Egypt", dial: "+20" },
+    { iso: "ng", fl: "🇳🇬", ds: "Nigeria", dial: "+234" },
+    { iso: "ke", fl: "🇰🇪", ds: "Kenya", dial: "+254" },
+    { iso: "br", fl: "🇧🇷", ds: "Brazil", dial: "+55" },
+    { iso: "mx", fl: "🇲🇽", ds: "Mexico", dial: "+52" },
+    { iso: "jp", fl: "🇯🇵", ds: "Japan", dial: "+81" },
+    { iso: "kr", fl: "🇰🇷", ds: "South Korea", dial: "+82" },
+    { iso: "cn", fl: "🇨🇳", ds: "China", dial: "+86" },
+    { iso: "hk", fl: "🇭🇰", ds: "Hong Kong", dial: "+852" },
+    { iso: "ru", fl: "🇷🇺", ds: "Russia", dial: "+7" },
+    { iso: "tr", fl: "🇹🇷", ds: "Turkey", dial: "+90" },
+    { iso: "pl", fl: "🇵🇱", ds: "Poland", dial: "+48" },
+    { iso: "no", fl: "🇳🇴", ds: "Norway", dial: "+47" },
+    { iso: "dk", fl: "🇩🇰", ds: "Denmark", dial: "+45" },
+    { iso: "fi", fl: "🇫🇮", ds: "Finland", dial: "+358" },
+    { iso: "be", fl: "🇧🇪", ds: "Belgium", dial: "+32" },
+    { iso: "at", fl: "🇦🇹", ds: "Austria", dial: "+43" },
+    { iso: "pt", fl: "🇵🇹", ds: "Portugal", dial: "+351" },
+    { iso: "gr", fl: "🇬🇷", ds: "Greece", dial: "+30" },
+    { iso: "af", fl: "🇦🇫", ds: "Afghanistan", dial: "+93" },
+    { iso: "al", fl: "🇦🇱", ds: "Albania", dial: "+355" },
+    { iso: "dz", fl: "🇩🇿", ds: "Algeria", dial: "+213" },
+    { iso: "ad", fl: "🇦🇩", ds: "Andorra", dial: "+376" },
+    { iso: "ao", fl: "🇦🇴", ds: "Angola", dial: "+244" },
+    { iso: "ar", fl: "🇦🇷", ds: "Argentina", dial: "+54" },
+    { iso: "am", fl: "🇦🇲", ds: "Armenia", dial: "+374" },
+    { iso: "az", fl: "🇦🇿", ds: "Azerbaijan", dial: "+994" },
+    { iso: "by", fl: "🇧🇾", ds: "Belarus", dial: "+375" },
+    { iso: "cl", fl: "🇨🇱", ds: "Chile", dial: "+56" },
+    { iso: "co", fl: "🇨🇴", ds: "Colombia", dial: "+57" },
+    { iso: "cz", fl: "🇨🇿", ds: "Czechia", dial: "+420" },
+    { iso: "hu", fl: "🇭🇺", ds: "Hungary", dial: "+36" },
+    { iso: "il", fl: "🇮🇱", ds: "Israel", dial: "+972" },
+    { iso: "jo", fl: "🇯🇴", ds: "Jordan", dial: "+962" },
+    { iso: "lb", fl: "🇱🇧", ds: "Lebanon", dial: "+961" },
+    { iso: "mv", fl: "🇲🇻", ds: "Maldives", dial: "+960" },
+    { iso: "mu", fl: "🇲🇺", ds: "Mauritius", dial: "+230" },
+    { iso: "ma", fl: "🇲🇦", ds: "Morocco", dial: "+212" },
+    { iso: "ro", fl: "🇷🇴", ds: "Romania", dial: "+40" }
+  ];
+
+  const initCountryCodeDropdown = (wrapperId, btnId, menuId, flagId, codeId) => {
+    const wrapper = document.getElementById(wrapperId);
+    const btn = document.getElementById(btnId);
+    const menu = document.getElementById(menuId);
+    const flagEl = document.getElementById(flagId);
+    const codeEl = document.getElementById(codeId);
+    if (!wrapper || !btn || !menu || !flagEl || !codeEl) return;
+
+    const searchInput = menu.querySelector(".phone-search-input");
+    const optionsList = menu.querySelector(".phone-options-list");
+
+    const renderList = (filterText = "") => {
+      optionsList.innerHTML = "";
+      const search = filterText.toLowerCase().trim();
+      const filtered = COUNTRIES_DATA.filter(c =>
+        c.ds.toLowerCase().includes(search) || c.dial.includes(search) || c.iso.includes(search)
+      );
+
+      if (filtered.length === 0) {
+        const noRes = document.createElement("li");
+        noRes.className = "phone-no-results";
+        noRes.textContent = "No country found";
+        optionsList.appendChild(noRes);
+        return;
+      }
+
+      filtered.forEach(c => {
+        const li = document.createElement("li");
+        li.className = "phone-option-item";
+        if (codeEl.textContent.trim() === c.dial) {
+          li.classList.add("selected");
+        }
+        li.innerHTML = `
+          <div class="phone-option-left">
+            <span>${c.fl}</span>
+            <span class="phone-option-name">${c.ds}</span>
+          </div>
+          <span class="phone-option-dial">${c.dial}</span>
+        `;
+        li.addEventListener("click", () => {
+          flagEl.textContent = c.fl;
+          codeEl.textContent = c.dial;
+          closeMenu();
+        });
+        optionsList.appendChild(li);
+      });
+    };
+
+    const openMenu = () => {
+      document.querySelectorAll(".phone-country-menu.open").forEach(m => m.classList.remove("open"));
+      document.querySelectorAll(".phone-country-dropdown-btn.active").forEach(b => b.classList.remove("active"));
+      menu.classList.add("open");
+      btn.classList.add("active");
+      btn.setAttribute("aria-expanded", "true");
+      renderList(searchInput ? searchInput.value : "");
+      if (searchInput) {
+        setTimeout(() => searchInput.focus(), 50);
+      }
+    };
+
+    const closeMenu = () => {
+      menu.classList.remove("open");
+      btn.classList.remove("active");
+      btn.setAttribute("aria-expanded", "false");
+      if (searchInput) searchInput.value = "";
+    };
+
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      menu.classList.contains("open") ? closeMenu() : openMenu();
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        renderList(e.target.value);
+      });
+      searchInput.addEventListener("click", (e) => e.stopPropagation());
+    }
+
+    menu.addEventListener("click", (e) => e.stopPropagation());
+
+    document.addEventListener("click", (e) => {
+      if (!wrapper.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && menu.classList.contains("open")) {
+        closeMenu();
+      }
+    });
+
+    // Initial render
+    renderList();
+  };
+
+  // Initialize phone dropdowns for both forms
+  initCountryCodeDropdown("hero-phone-wrapper", "hero-country-btn", "hero-country-menu", "hero-flag", "hero-code");
+  initCountryCodeDropdown("bottom-phone-wrapper", "bottom-country-btn", "bottom-country-menu", "bottom-flag", "bottom-code");
+
   // ─── FORM SUBMISSIONS ─────────────────────────────────
 
   const validateEmail = (email) => {
@@ -211,12 +386,15 @@ document.addEventListener("DOMContentLoaded", () => {
     setHiddenField('POTENTIALCF7', utmCampaign);
     setHiddenField('POTENTIALCF6', utmContent);
 
-    // 5. Ensure form action and method are set for Bigin CRM
+    // 5. Ensure Contacts.Mobile is populated with dialcode + phone
+    setHiddenField('Contacts.Mobile', leadData.phone || '');
+
+    // 6. Ensure form action and method are set for Bigin CRM
     form.action = 'https://bigin.zoho.com/crm/WebForm';
     form.method = 'POST';
     form.enctype = 'multipart/form-data';
 
-    // 6. Attach UTMs & Tracking data to Google Sheets payload
+    // 7. Attach UTMs & Tracking data to Google Sheets payload
     const fullSheetData = {
       ...leadData,
       utm_source: utmSource,
@@ -226,7 +404,7 @@ document.addEventListener("DOMContentLoaded", () => {
       gclid: zcGad
     };
 
-    // 7. Submit to Google Sheets in background, then submit directly to Bigin CRM
+    // 8. Submit to Google Sheets in background, then submit directly to Bigin CRM
     let submitted = false;
     const executeBiginSubmit = () => {
       if (!submitted) {
@@ -262,6 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const nameInput = document.getElementById("hero-name");
       const companyInput = document.getElementById("hero-company");
       const phoneInput = document.getElementById("hero-phone");
+      const phoneCodeEl = document.getElementById("hero-code");
       const emailInput = document.getElementById("hero-email");
       const serviceInput = document.getElementById("hero-service");
       const budgetInput = document.getElementById("hero-budget");
@@ -270,7 +449,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const name = nameInput ? nameInput.value.trim() : "";
       const company = companyInput ? companyInput.value.trim() : "";
-      const phone = phoneInput ? phoneInput.value.trim() : "";
+      const rawPhone = phoneInput ? phoneInput.value.trim().replace(/\s+/g, '') : "";
+      const dialCode = phoneCodeEl ? phoneCodeEl.textContent.trim() : "+91";
+      const fullPhone = rawPhone ? (dialCode + rawPhone) : "";
       const email = emailInput ? emailInput.value.trim() : "";
       const service = serviceInput ? serviceInput.value : "";
       const budget = budgetInput ? budgetInput.value : "";
@@ -283,7 +464,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const requiredInputs = [
         { el: nameInput, name: "Name", val: name },
         { el: companyInput, name: "Company", val: company },
-        { el: phoneInput, name: "Phone Number", val: phone },
+        { el: phoneInput, name: "Phone Number", val: rawPhone },
         { el: emailInput, name: "Email Address", val: email },
         { el: serviceInput, name: "Service Interested In", val: (service !== "-None-" && service !== "") ? service : "" },
         { el: budgetInput, name: "Budget", val: (budget !== "-None-" && budget !== "") ? budget : "" },
@@ -304,6 +485,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (missingFields.length > 0) {
         errorMsg = `Please fill in required fields: ${missingFields.join(", ")}.`;
+      } else if (rawPhone && !/^[0-9+\-()\s]{6,16}$/.test(rawPhone)) {
+        if (phoneInput) phoneInput.style.borderColor = "#ea4335";
+        errorMsg = "Please enter a valid phone number.";
+        hasError = true;
       } else if (email && !validateEmail(email)) {
         if (emailInput) emailInput.style.borderColor = "#ea4335";
         errorMsg = "Please enter a valid email address.";
@@ -329,12 +514,16 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.textContent = "Submitting...";
       }
 
+      // Sync hidden field
+      const hiddenPhone = document.getElementById("hero-phone-hidden");
+      if (hiddenPhone) hiddenPhone.value = fullPhone;
+
       // Submit to Bigin CRM & Google Sheets
       prepareAndSubmitBiginForm(leadFormHero, {
         name,
         company,
         email,
-        phone,
+        phone: fullPhone,
         service,
         budget,
         timeline,
@@ -368,6 +557,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const nameInput = document.getElementById("bottom-name");
       const companyInput = document.getElementById("bottom-company");
       const phoneInput = document.getElementById("bottom-phone");
+      const phoneCodeEl = document.getElementById("bottom-code");
       const emailInput = document.getElementById("bottom-email");
       const serviceInput = document.getElementById("bottom-service");
       const budgetInput = document.getElementById("bottom-budget");
@@ -376,7 +566,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const name = nameInput ? nameInput.value.trim() : "";
       const company = companyInput ? companyInput.value.trim() : "";
-      const phone = phoneInput ? phoneInput.value.trim() : "";
+      const rawPhone = phoneInput ? phoneInput.value.trim().replace(/\s+/g, '') : "";
+      const dialCode = phoneCodeEl ? phoneCodeEl.textContent.trim() : "+91";
+      const fullPhone = rawPhone ? (dialCode + rawPhone) : "";
       const email = emailInput ? emailInput.value.trim() : "";
       const service = serviceInput ? serviceInput.value : "";
       const budget = budgetInput ? budgetInput.value : "";
@@ -389,7 +581,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const requiredInputs = [
         { el: nameInput, name: "Name", val: name },
         { el: companyInput, name: "Company", val: company },
-        { el: phoneInput, name: "Phone Number", val: phone },
+        { el: phoneInput, name: "Phone Number", val: rawPhone },
         { el: emailInput, name: "Email Address", val: email },
         { el: serviceInput, name: "Service Interested In", val: (service !== "-None-" && service !== "") ? service : "" },
         { el: budgetInput, name: "Budget", val: (budget !== "-None-" && budget !== "") ? budget : "" },
@@ -410,6 +602,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (missingFields.length > 0) {
         errorMsg = `Please fill in required fields: ${missingFields.join(", ")}.`;
+      } else if (rawPhone && !/^[0-9+\-()\s]{6,16}$/.test(rawPhone)) {
+        if (phoneInput) phoneInput.style.borderColor = "#ea4335";
+        errorMsg = "Please enter a valid phone number.";
+        hasError = true;
       } else if (email && !validateEmail(email)) {
         if (emailInput) emailInput.style.borderColor = "#ea4335";
         errorMsg = "Please enter a valid email address.";
@@ -435,12 +631,16 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.textContent = "Submitting...";
       }
 
+      // Sync hidden field
+      const hiddenPhone = document.getElementById("bottom-phone-hidden");
+      if (hiddenPhone) hiddenPhone.value = fullPhone;
+
       // Submit to Bigin CRM & Google Sheets
       prepareAndSubmitBiginForm(leadFormBottom, {
         name,
         company,
         email,
-        phone,
+        phone: fullPhone,
         service,
         budget,
         timeline,

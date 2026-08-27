@@ -147,14 +147,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   class="form-input"
                   required
                 >
-                <input
-                  id="hero-phone"
-                  type="tel"
-                  name="Contacts.Mobile"
-                  placeholder="Phone Number *"
-                  class="form-input"
-                  required
-                >
+                <div class="phone-input-wrapper" id="hero-phone-wrapper">
+                  <button type="button" class="phone-country-dropdown-btn" id="hero-country-btn" aria-label="Select country code" aria-expanded="false">
+                    <span class="phone-code-display">
+                      <span class="phone-flag-emoji" id="hero-flag">🇮🇳</span>
+                      <span class="phone-code-text" id="hero-code">+91</span>
+                    </span>
+                    <svg class="phone-arrow-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                  </button>
+                  <div class="phone-country-menu" id="hero-country-menu">
+                    <div class="phone-search-container">
+                      <input type="text" class="phone-search-input" placeholder="Search country or code..." />
+                    </div>
+                    <ul class="phone-options-list"></ul>
+                  </div>
+                  <input
+                    id="hero-phone"
+                    type="tel"
+                    placeholder="Phone Number *"
+                    class="form-input phone-number-field"
+                    required
+                  >
+                  <input type="hidden" name="Contacts.Mobile" id="hero-phone-hidden" value="">
+                </div>
                 <input
                   id="hero-email"
                   type="email"
@@ -722,14 +737,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 class="form-input"
                 required
               >
-              <input
-                id="bottom-phone"
-                type="tel"
-                name="Contacts.Mobile"
-                placeholder="Phone Number *"
-                class="form-input"
-                required
-              >
+                <div class="phone-input-wrapper" id="bottom-phone-wrapper">
+                  <button type="button" class="phone-country-dropdown-btn" id="bottom-country-btn" aria-label="Select country code" aria-expanded="false">
+                    <span class="phone-code-display">
+                      <span class="phone-flag-emoji" id="bottom-flag">🇮🇳</span>
+                      <span class="phone-code-text" id="bottom-code">+91</span>
+                    </span>
+                    <svg class="phone-arrow-icon" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                  </button>
+                  <div class="phone-country-menu" id="bottom-country-menu">
+                    <div class="phone-search-container">
+                      <input type="text" class="phone-search-input" placeholder="Search country or code..." />
+                    </div>
+                    <ul class="phone-options-list"></ul>
+                  </div>
+                  <input
+                    id="bottom-phone"
+                    type="tel"
+                    placeholder="Phone Number *"
+                    class="form-input phone-number-field"
+                    required
+                  >
+                  <input type="hidden" name="Contacts.Mobile" id="bottom-phone-hidden" value="">
+                </div>
             </div>
             
             <div class="form-row-three">
@@ -881,108 +911,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </div>
   </footer>
 
-  <!-- ─── INTERACTIVE CAT POPUP OVERLAY ────────────────── -->
-  <div class="popup-overlay" id="myPopup">
-    <div class="popup-container">
 
-      <!-- Right Form Section -->
-      <div class="popup-form-section">
-        <button class="popup-close" id="popup-close-btn" aria-label="Close popup">&times;</button>
-        <div class="popup-header">
-          <h2>Get in Touch</h2>
-        </div>
-        <div class="popup-content" id="popup-content-body">
-          <form class="lead-form" id="popupForm" action="https://bigin.zoho.com/crm/WebForm" method="POST" enctype="multipart/form-data" accept-charset="UTF-8" novalidate>
-            <!-- Bigin CRM Hidden Tokens & Default Fields -->
-            <input type="hidden" name="xnQsjsdp" value="a7f69a1ccd4de40bed4645b95d4e4f31865afdeda5a2bbad80fe0f17dbf6b497">
-            <input type="hidden" name="zc_gad" id="zc_gad_popup" value="">
-            <input type="hidden" name="xmIwtLD" value="6ef2a84dc27fb5ab21b6da00d89fb8ab77a5e3dfddf5ab87ccd38218df78e113fb88bcdca886b27dffc6ca697bdcf5bb">
-            <input type="hidden" name="actionType" value="UG90ZW50aWFscw==">
-            <input type="hidden" name="returnURL" value="">
-            <input type="hidden" name="Pipeline" value="Sales Pipeline Standard 1">
-            <input type="hidden" name="Stage" value="Qualification">
-            <input type="hidden" name="Lead Source" value="Official Website">
-
-            <!-- Tracking & UTM Fields (Hidden & Auto-Filled) -->
-            <input type="hidden" name="POTENTIALCF4" value="">
-            <input type="hidden" name="POTENTIALCF5" value="">
-            <input type="hidden" name="POTENTIALCF7" value="">
-            <input type="hidden" name="POTENTIALCF6" value="">
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="popup-name">Name *</label>
-                <input type="text" id="popup-name" name="Potential Name" required placeholder="Enter your name" class="form-input">
-              </div>
-              <div class="form-group">
-                <label for="popup-brand">Brand/Company Name *</label>
-                <input type="text" id="popup-brand" name="Accounts.Account Name" required placeholder="Your brand/company name" class="form-input">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="popup-phone">Phone Number *</label>
-                <input type="tel" id="popup-phone" name="Contacts.Mobile" required placeholder="Enter your phone number" class="form-input">
-              </div>
-              <div class="form-group">
-                <label for="popup-email">Email ID *</label>
-                <input type="email" id="popup-email" name="Contacts.Email" required placeholder="Enter your email" class="form-input">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="popup-service">Service Interested In *</label>
-                <select id="popup-service" name="POTENTIALCF1" class="form-input form-select" required>
-                  <option value="">Select a service</option>
-                  <option value="Digital Marketing">Digital Marketing</option>
-                  <option value="SEO">SEO</option>
-                  <option value="Website Development">Website Development</option>
-                  <option value="Video Production">Video Production</option>
-                  <option value="Influencer Marketing">Influencer Marketing</option>
-                  <option value="AI Videos">AI Videos</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="popup-budget">Marketing Budget *</label>
-                <select id="popup-budget" name="POTENTIALCF3" class="form-input form-select" required>
-                  <option value="">Select budget</option>
-                  <option value="Below ₹25K">Below ₹25K</option>
-                  <option value="₹25K–₹50K">₹25K–₹50K</option>
-                  <option value="₹50K–₹1L">₹50K–₹1L</option>
-                  <option value="₹1L–₹3L">₹1L–₹3L</option>
-                  <option value="₹3L+">₹3L+</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="popup-timeline">When do you want to start? *</label>
-              <select id="popup-timeline" name="POTENTIALCF2" class="form-input form-select" required>
-                <option value="">Select timeline</option>
-                <option value="Immediately">Immediately</option>
-                <option value="Within 30 days">Within 30 days</option>
-                <option value="1–3 months">1–3 months</option>
-                <option value="Just Exploring">Just Exploring</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="popup-description">Description / Requirement (optional)</label>
-              <textarea id="popup-description" name="Description" rows="3" placeholder="Tell us more about your goals (optional)..." class="form-input"></textarea>
-            </div>
-            
-            <div class="form-error-msg" id="popup-form-error" style="display: none;">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-              <span class="error-text"></span>
-            </div>
-            
-            <div class="popup-actions">
-              <button type="button" class="popup-btn popup-btn-secondary" id="popup-cancel-btn">Cancel</button>
-              <button type="submit" class="popup-btn popup-btn-primary">Submit</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
   <!-- Floating Contact Buttons -->
