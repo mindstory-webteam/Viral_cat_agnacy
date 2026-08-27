@@ -170,6 +170,112 @@ document.addEventListener("DOMContentLoaded", () => {
     return pattern.test(email);
   };
 
+  // ─── HELPER: PREPARE AND SUBMIT TO BIGIN CRM & GOOGLE SHEETS ───────
+  const prepareAndSubmitBiginForm = (form, leadData, submitBtn) => {
+    // 1. Calculate absolute redirect URL to thank-you.html
+    const thankYouUrl = new URL('thank-you.html', window.location.href).href;
+    const currentUrl = window.location.href;
+
+    // 2. Fetch UTMs & Tracking IDs
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmSource = urlParams.get('utm_source') || sessionStorage.getItem('vca_utm_source') || '';
+    const utmCampaign = urlParams.get('utm_campaign') || sessionStorage.getItem('vca_utm_campaign') || '';
+    const utmContent = urlParams.get('utm_content') || sessionStorage.getItem('vca_utm_content') || '';
+    const zcGad = urlParams.get('gclid') || urlParams.get('zc_gad') || sessionStorage.getItem('vca_zc_gad') || '';
+
+    // Helper to ensure input exists and is set
+    const setHiddenField = (name, value) => {
+      let input = form.querySelector(`input[name='${name}']`);
+      if (!input) {
+        input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        form.appendChild(input);
+      }
+      input.value = value;
+    };
+
+    // 3. Populate Bigin tokens and configuration
+    setHiddenField('xnQsjsdp', 'a7f69a1ccd4de40bed4645b95d4e4f31865afdeda5a2bbad80fe0f17dbf6b497');
+    setHiddenField('xmIwtLD', '6ef2a84dc27fb5ab21b6da00d89fb8ab77a5e3dfddf5ab87ccd38218df78e113fb88bcdca886b27dffc6ca697bdcf5bb');
+    setHiddenField('actionType', 'UG90ZW50aWFscw==');
+    setHiddenField('returnURL', thankYouUrl);
+    setHiddenField('Pipeline', 'Sales Pipeline Standard 1');
+    setHiddenField('Stage', 'Qualification');
+    setHiddenField('Lead Source', 'Official Website');
+
+    // 4. Populate Tracking & UTM Fields
+    setHiddenField('zc_gad', zcGad);
+    setHiddenField('POTENTIALCF4', currentUrl);
+    setHiddenField('POTENTIALCF5', utmSource);
+    setHiddenField('POTENTIALCF7', utmCampaign);
+    setHiddenField('POTENTIALCF6', utmContent);
+
+    // 5. Ensure form action and method are set for Bigin CRM
+    form.action = 'https://bigin.zoho.com/crm/WebForm';
+    form.method = 'POST';
+    form.enctype = 'multipart/form-data';
+
+    // ─── CONSOLE LOGGING FOR VERIFICATION ───
+    console.group(`%c🚀 Bigin CRM Form Submission: [${leadData.source || form.id}]`, 'color: #1980d8; font-weight: bold; font-size: 13px;');
+    console.log('%c📝 Typed User Data:', 'color: #00d264; font-weight: bold;', leadData);
+    console.log('%c🎯 UTM & Tracking Fields:', 'color: #ff9800; font-weight: bold;', {
+      'POTENTIALCF4 (Lead Page URL)': currentUrl,
+      'POTENTIALCF5 (UTM Source)': utmSource || '(none)',
+      'POTENTIALCF7 (UTM Campaign)': utmCampaign || '(none)',
+      'POTENTIALCF6 (UTM Content)': utmContent || '(none)',
+      'zc_gad (GCLID)': zcGad || '(none)'
+    });
+    console.log('%c⚙️ Bigin Config:', 'color: #9c27b0; font-weight: bold;', {
+      'Pipeline': 'Sales Pipeline Standard 1',
+      'Stage': 'Qualification',
+      'Lead Source': 'Official Website',
+      'Action Endpoint': form.action,
+      'Redirect (returnURL)': thankYouUrl
+    });
+    console.groupEnd();
+
+    // 6. Attach UTMs & Tracking data to Google Sheets payload
+    const fullSheetData = {
+      ...leadData,
+      utm_source: utmSource,
+      utm_campaign: utmCampaign,
+      utm_content: utmContent,
+      lead_page_url: currentUrl,
+      gclid: zcGad
+    };
+
+    // 7. Submit to Google Sheets in background, then submit directly to Bigin CRM
+    let submitted = false;
+    const executeBiginSubmit = () => {
+      if (!submitted) {
+        submitted = true;
+        console.log('%c✅ Submitting payload to Bigin CRM...', 'color: #1980d8; font-weight: bold;');
+        try {
+          HTMLFormElement.prototype.submit.call(form);
+        } catch (err) {
+          form.submit();
+        }
+      }
+    };
+
+    if (window.submitToGoogleSheet) {
+      console.log('%c📊 Updating Google Sheet...', 'color: #0f9d58; font-weight: bold;', fullSheetData);
+      window.submitToGoogleSheet(fullSheetData)
+        .then(() => {
+          console.log('%c📊 Google Sheet updated successfully.', 'color: #0f9d58;');
+          setTimeout(executeBiginSubmit, 150);
+        })
+        .catch(() => {
+          executeBiginSubmit();
+        });
+      // Safety timeout in case sheet request is slow
+      setTimeout(executeBiginSubmit, 450);
+    } else {
+      executeBiginSubmit();
+    }
+  };
+
   // 1. Hero Lead Form
   if (leadFormHero) {
     leadFormHero.addEventListener("submit", (e) => {
@@ -245,25 +351,8 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.textContent = "Submitting...";
       }
 
-      // Populate hidden fields
-      const currentUrl = window.location.href;
-      const urlParams = new URLSearchParams(window.location.search);
-      if (leadFormHero.querySelector("input[name='returnURL']")) leadFormHero.querySelector("input[name='returnURL']").value = currentUrl;
-      if (leadFormHero.querySelector("input[name='POTENTIALCF4']")) leadFormHero.querySelector("input[name='POTENTIALCF4']").value = currentUrl;
-      if (leadFormHero.querySelector("input[name='POTENTIALCF5']")) leadFormHero.querySelector("input[name='POTENTIALCF5']").value = urlParams.get('utm_source') || '';
-      if (leadFormHero.querySelector("input[name='POTENTIALCF7']")) leadFormHero.querySelector("input[name='POTENTIALCF7']").value = urlParams.get('utm_campaign') || '';
-      if (leadFormHero.querySelector("input[name='POTENTIALCF6']")) leadFormHero.querySelector("input[name='POTENTIALCF6']").value = urlParams.get('utm_content') || '';
-
-      // Submit to Google Sheets and redirect to Thank You page
-      let redirected = false;
-      const doRedirect = () => {
-        if (!redirected) {
-          redirected = true;
-          window.location.href = 'thank-you.html';
-        }
-      };
-
-      submitToGoogleSheet({
+      // Submit to Bigin CRM & Google Sheets
+      prepareAndSubmitBiginForm(leadFormHero, {
         name,
         company,
         email,
@@ -273,10 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
         timeline,
         description,
         source: 'Hero Form'
-      }).then(doRedirect).catch(doRedirect);
-
-      // Safety fallback timeout
-      setTimeout(doRedirect, 1200);
+      }, submitBtn);
     });
 
     ["hero-name", "hero-company", "hero-phone", "hero-email", "hero-service", "hero-budget", "hero-timeline", "hero-description"].forEach(id => {
@@ -371,25 +457,8 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.textContent = "Submitting...";
       }
 
-      // Populate hidden fields
-      const currentUrl = window.location.href;
-      const urlParams = new URLSearchParams(window.location.search);
-      if (leadFormBottom.querySelector("input[name='returnURL']")) leadFormBottom.querySelector("input[name='returnURL']").value = currentUrl;
-      if (leadFormBottom.querySelector("input[name='POTENTIALCF4']")) leadFormBottom.querySelector("input[name='POTENTIALCF4']").value = currentUrl;
-      if (leadFormBottom.querySelector("input[name='POTENTIALCF5']")) leadFormBottom.querySelector("input[name='POTENTIALCF5']").value = urlParams.get('utm_source') || '';
-      if (leadFormBottom.querySelector("input[name='POTENTIALCF7']")) leadFormBottom.querySelector("input[name='POTENTIALCF7']").value = urlParams.get('utm_campaign') || '';
-      if (leadFormBottom.querySelector("input[name='POTENTIALCF6']")) leadFormBottom.querySelector("input[name='POTENTIALCF6']").value = urlParams.get('utm_content') || '';
-
-      // Submit to Google Sheets and redirect to Thank You page
-      let redirected = false;
-      const doRedirect = () => {
-        if (!redirected) {
-          redirected = true;
-          window.location.href = 'thank-you.html';
-        }
-      };
-
-      submitToGoogleSheet({
+      // Submit to Bigin CRM & Google Sheets
+      prepareAndSubmitBiginForm(leadFormBottom, {
         name,
         company,
         email,
@@ -399,10 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
         timeline,
         description: desc,
         source: 'Bottom Lead Form'
-      }).then(doRedirect).catch(doRedirect);
-
-      // Safety fallback timeout
-      setTimeout(doRedirect, 1200);
+      }, submitBtn);
     });
 
     ["bottom-name", "bottom-company", "bottom-phone", "bottom-email", "bottom-service", "bottom-budget", "bottom-timeline", "bottom-description"].forEach(id => {
@@ -453,9 +519,9 @@ document.addEventListener("DOMContentLoaded", () => {
         { el: companyInput, name: "Brand / Company", val: company },
         { el: phoneInput, name: "Phone Number", val: phone },
         { el: emailInput, name: "Email ID", val: email },
-        { el: serviceInput, name: "Service Interested In", val: service },
-        { el: budgetInput, name: "Marketing Budget", val: budget },
-        { el: timelineInput, name: "Timeline", val: timeline }
+        { el: serviceInput, name: "Service Interested In", val: (service !== "-None-" && service !== "") ? service : "" },
+        { el: budgetInput, name: "Marketing Budget", val: (budget !== "-None-" && budget !== "") ? budget : "" },
+        { el: timelineInput, name: "Timeline", val: (timeline !== "-None-" && timeline !== "") ? timeline : "" }
       ];
 
       let missingFields = [];
@@ -497,25 +563,8 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.textContent = "Submitting...";
       }
 
-      // Populate hidden fields
-      const currentUrl = window.location.href;
-      const urlParams = new URLSearchParams(window.location.search);
-      if (popupForm.querySelector("input[name='returnURL']")) popupForm.querySelector("input[name='returnURL']").value = currentUrl;
-      if (popupForm.querySelector("input[name='POTENTIALCF4']")) popupForm.querySelector("input[name='POTENTIALCF4']").value = currentUrl;
-      if (popupForm.querySelector("input[name='POTENTIALCF5']")) popupForm.querySelector("input[name='POTENTIALCF5']").value = urlParams.get('utm_source') || '';
-      if (popupForm.querySelector("input[name='POTENTIALCF7']")) popupForm.querySelector("input[name='POTENTIALCF7']").value = urlParams.get('utm_campaign') || '';
-      if (popupForm.querySelector("input[name='POTENTIALCF6']")) popupForm.querySelector("input[name='POTENTIALCF6']").value = urlParams.get('utm_content') || '';
-
-      // Submit to Google Sheets and redirect to Thank You page
-      let redirected = false;
-      const doRedirect = () => {
-        if (!redirected) {
-          redirected = true;
-          window.location.href = 'thank-you.html';
-        }
-      };
-
-      submitToGoogleSheet({
+      // Submit to Bigin CRM & Google Sheets
+      prepareAndSubmitBiginForm(popupForm, {
         name,
         company,
         email,
@@ -525,10 +574,7 @@ document.addEventListener("DOMContentLoaded", () => {
         timeline,
         description: desc,
         source: 'Popup Form'
-      }).then(doRedirect).catch(doRedirect);
-
-      // Safety fallback timeout
-      setTimeout(doRedirect, 1200);
+      }, submitBtn);
     });
 
     ["popup-name", "popup-brand", "popup-phone", "popup-email", "popup-service", "popup-budget", "popup-timeline", "popup-description"].forEach(id => {

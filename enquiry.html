@@ -114,7 +114,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <div class="hero-right">
             <div class="lead-form-card">
               <h2 class="form-title">Find Out What's Holding Your Ads Back</h2>
-              <form class="lead-form" id="lead-form-hero" novalidate>
+              <form class="lead-form" id="lead-form-hero" action="https://bigin.zoho.com/crm/WebForm" method="POST" enctype="multipart/form-data" accept-charset="UTF-8" novalidate>
+                <!-- Bigin CRM Hidden Tokens & Default Fields -->
+                <input type="hidden" name="xnQsjsdp" value="a7f69a1ccd4de40bed4645b95d4e4f31865afdeda5a2bbad80fe0f17dbf6b497">
+                <input type="hidden" name="zc_gad" id="zc_gad_hero" value="">
+                <input type="hidden" name="xmIwtLD" value="6ef2a84dc27fb5ab21b6da00d89fb8ab77a5e3dfddf5ab87ccd38218df78e113fb88bcdca886b27dffc6ca697bdcf5bb">
+                <input type="hidden" name="actionType" value="UG90ZW50aWFscw==">
+                <input type="hidden" name="returnURL" value="">
+                <input type="hidden" name="Pipeline" value="Sales Pipeline Standard 1">
+                <input type="hidden" name="Stage" value="Qualification">
+                <input type="hidden" name="Lead Source" value="Official Website">
+
+                <!-- Tracking & UTM Fields (Hidden & Auto-Filled) -->
+                <input type="hidden" name="POTENTIALCF4" value="">
+                <input type="hidden" name="POTENTIALCF5" value="">
+                <input type="hidden" name="POTENTIALCF7" value="">
+                <input type="hidden" name="POTENTIALCF6" value="">
 
                 <input
                   id="hero-name"
@@ -673,7 +688,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <p class="bottom-form-subtitle">Leave your details below, and our experts will customize a result-oriented digital plan for your brand.</p>
           <div class="title-underline"></div>
           
-          <form class="lead-form bottom-lead-form" id="lead-form-bottom" novalidate>
+          <form class="lead-form bottom-lead-form" id="lead-form-bottom" action="https://bigin.zoho.com/crm/WebForm" method="POST" enctype="multipart/form-data" accept-charset="UTF-8" novalidate>
+            <!-- Bigin CRM Hidden Tokens & Default Fields -->
+            <input type="hidden" name="xnQsjsdp" value="a7f69a1ccd4de40bed4645b95d4e4f31865afdeda5a2bbad80fe0f17dbf6b497">
+            <input type="hidden" name="zc_gad" id="zc_gad_bottom" value="">
+            <input type="hidden" name="xmIwtLD" value="6ef2a84dc27fb5ab21b6da00d89fb8ab77a5e3dfddf5ab87ccd38218df78e113fb88bcdca886b27dffc6ca697bdcf5bb">
+            <input type="hidden" name="actionType" value="UG90ZW50aWFscw==">
+            <input type="hidden" name="returnURL" value="">
+            <input type="hidden" name="Pipeline" value="Sales Pipeline Standard 1">
+            <input type="hidden" name="Stage" value="Qualification">
+            <input type="hidden" name="Lead Source" value="Official Website">
+
+            <!-- Tracking & UTM Fields (Hidden & Auto-Filled) -->
+            <input type="hidden" name="POTENTIALCF4" value="">
+            <input type="hidden" name="POTENTIALCF5" value="">
+            <input type="hidden" name="POTENTIALCF7" value="">
+            <input type="hidden" name="POTENTIALCF6" value="">
 
             <div class="form-row-three">
               <input
@@ -862,7 +892,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <h2>Get in Touch</h2>
         </div>
         <div class="popup-content" id="popup-content-body">
-          <form class="lead-form" id="popupForm" novalidate>
+          <form class="lead-form" id="popupForm" action="https://bigin.zoho.com/crm/WebForm" method="POST" enctype="multipart/form-data" accept-charset="UTF-8" novalidate>
+            <!-- Bigin CRM Hidden Tokens & Default Fields -->
+            <input type="hidden" name="xnQsjsdp" value="a7f69a1ccd4de40bed4645b95d4e4f31865afdeda5a2bbad80fe0f17dbf6b497">
+            <input type="hidden" name="zc_gad" id="zc_gad_popup" value="">
+            <input type="hidden" name="xmIwtLD" value="6ef2a84dc27fb5ab21b6da00d89fb8ab77a5e3dfddf5ab87ccd38218df78e113fb88bcdca886b27dffc6ca697bdcf5bb">
+            <input type="hidden" name="actionType" value="UG90ZW50aWFscw==">
+            <input type="hidden" name="returnURL" value="">
+            <input type="hidden" name="Pipeline" value="Sales Pipeline Standard 1">
+            <input type="hidden" name="Stage" value="Qualification">
+            <input type="hidden" name="Lead Source" value="Official Website">
+
+            <!-- Tracking & UTM Fields (Hidden & Auto-Filled) -->
+            <input type="hidden" name="POTENTIALCF4" value="">
+            <input type="hidden" name="POTENTIALCF5" value="">
+            <input type="hidden" name="POTENTIALCF7" value="">
+            <input type="hidden" name="POTENTIALCF6" value="">
 
             <div class="form-row">
               <div class="form-group">
@@ -981,17 +1026,45 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Auto-populate UTM and Lead Page URL across all forms
-      var currentUrl = window.location.href;
-      var urlParams = new URLSearchParams(window.location.search);
-      var utmSource = urlParams.get('utm_source') || '';
-      var utmCampaign = urlParams.get('utm_campaign') || '';
-      var utmContent = urlParams.get('utm_content') || '';
+      // 1. Calculate absolute thank you return URL
+      var returnUrl = new URL('thank-you.html', window.location.href).href;
 
+      // 2. Parse current URL params
+      var urlParams = new URLSearchParams(window.location.search);
+      var utmSource = urlParams.get('utm_source');
+      var utmCampaign = urlParams.get('utm_campaign');
+      var utmContent = urlParams.get('utm_content');
+      var gclid = urlParams.get('gclid') || urlParams.get('zc_gad');
+
+      // 3. Persist in sessionStorage so UTMs survive page navigation / popup open
+      if (utmSource) sessionStorage.setItem('vca_utm_source', utmSource);
+      if (utmCampaign) sessionStorage.setItem('vca_utm_campaign', utmCampaign);
+      if (utmContent) sessionStorage.setItem('vca_utm_content', utmContent);
+      if (gclid) sessionStorage.setItem('vca_zc_gad', gclid);
+
+      // Fallback from sessionStorage if not currently in URL
+      var finalSource = utmSource || sessionStorage.getItem('vca_utm_source') || '';
+      var finalCampaign = utmCampaign || sessionStorage.getItem('vca_utm_campaign') || '';
+      var finalContent = utmContent || sessionStorage.getItem('vca_utm_content') || '';
+      var finalGad = gclid || sessionStorage.getItem('vca_zc_gad') || '';
+      var currentUrl = window.location.href;
+
+      // 4. Auto-fill hidden fields across all forms
+      document.querySelectorAll("input[name='returnURL']").forEach(function(el) { el.value = returnUrl; });
       document.querySelectorAll("input[name='POTENTIALCF4']").forEach(function(el) { el.value = currentUrl; });
-      document.querySelectorAll("input[name='POTENTIALCF5']").forEach(function(el) { el.value = utmSource; });
-      document.querySelectorAll("input[name='POTENTIALCF7']").forEach(function(el) { el.value = utmCampaign; });
-      document.querySelectorAll("input[name='POTENTIALCF6']").forEach(function(el) { el.value = utmContent; });
+      document.querySelectorAll("input[name='POTENTIALCF5']").forEach(function(el) { el.value = finalSource; });
+      document.querySelectorAll("input[name='POTENTIALCF7']").forEach(function(el) { el.value = finalCampaign; });
+      document.querySelectorAll("input[name='POTENTIALCF6']").forEach(function(el) { el.value = finalContent; });
+      document.querySelectorAll("input[name='zc_gad']").forEach(function(el) { el.value = finalGad; });
+
+      // 5. Console status log for developer/testing inspection
+      console.log('%c[Bigin UTM Tracking Active]', 'color: #1980d8; font-weight: bold;', {
+        source: finalSource || '(none)',
+        campaign: finalCampaign || '(none)',
+        content: finalContent || '(none)',
+        leadPageUrl: currentUrl,
+        returnUrl: returnUrl
+      });
     });
   </script>
 
