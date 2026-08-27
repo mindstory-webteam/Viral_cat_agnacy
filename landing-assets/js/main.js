@@ -237,13 +237,12 @@ document.addEventListener("DOMContentLoaded", () => {
     { iso: "ro", fl: "🇷🇴", ds: "Romania", dial: "+40" }
   ];
 
-  const initCountryCodeDropdown = (wrapperId, btnId, menuId, flagId, codeId) => {
+  const initCountryCodeDropdown = (wrapperId, btnId, menuId, codeId) => {
     const wrapper = document.getElementById(wrapperId);
     const btn = document.getElementById(btnId);
     const menu = document.getElementById(menuId);
-    const flagEl = document.getElementById(flagId);
     const codeEl = document.getElementById(codeId);
-    if (!wrapper || !btn || !menu || !flagEl || !codeEl) return;
+    if (!wrapper || !btn || !menu || !codeEl) return;
 
     const searchInput = menu.querySelector(".phone-search-input");
     const optionsList = menu.querySelector(".phone-options-list");
@@ -271,13 +270,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         li.innerHTML = `
           <div class="phone-option-left">
-            <span>${c.fl}</span>
             <span class="phone-option-name">${c.ds}</span>
           </div>
           <span class="phone-option-dial">${c.dial}</span>
         `;
         li.addEventListener("click", () => {
-          flagEl.textContent = c.fl;
           codeEl.textContent = c.dial;
           closeMenu();
         });
@@ -335,8 +332,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Initialize phone dropdowns for both forms
-  initCountryCodeDropdown("hero-phone-wrapper", "hero-country-btn", "hero-country-menu", "hero-flag", "hero-code");
-  initCountryCodeDropdown("bottom-phone-wrapper", "bottom-country-btn", "bottom-country-menu", "bottom-flag", "bottom-code");
+  initCountryCodeDropdown("hero-phone-wrapper", "hero-country-btn", "hero-country-menu", "hero-code");
+  initCountryCodeDropdown("bottom-phone-wrapper", "bottom-country-btn", "bottom-country-menu", "bottom-code");
 
   // ─── FORM SUBMISSIONS ─────────────────────────────────
 

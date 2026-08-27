@@ -705,7 +705,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 6px;
-  padding: 12px 12px;
+  padding: 12px 14px;
   border: 1.5px solid #e2e8f0;
   border-radius: 8px;
   background: #ffffff;
@@ -714,8 +714,8 @@ body {
   font-weight: 500;
   cursor: pointer;
   outline: none;
-  min-width: 90px;
-  max-width: 110px;
+  min-width: 78px;
+  max-width: 95px;
   flex-shrink: 0;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   user-select: none;
