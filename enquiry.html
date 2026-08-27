@@ -1056,15 +1056,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       document.querySelectorAll("input[name='POTENTIALCF7']").forEach(function(el) { el.value = finalCampaign; });
       document.querySelectorAll("input[name='POTENTIALCF6']").forEach(function(el) { el.value = finalContent; });
       document.querySelectorAll("input[name='zc_gad']").forEach(function(el) { el.value = finalGad; });
-
-      // 5. Console status log for developer/testing inspection
-      console.log('%c[Bigin UTM Tracking Active]', 'color: #1980d8; font-weight: bold;', {
-        source: finalSource || '(none)',
-        campaign: finalCampaign || '(none)',
-        content: finalContent || '(none)',
-        leadPageUrl: currentUrl,
-        returnUrl: returnUrl
-      });
     });
   </script>
 

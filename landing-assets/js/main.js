@@ -216,25 +216,6 @@ document.addEventListener("DOMContentLoaded", () => {
     form.method = 'POST';
     form.enctype = 'multipart/form-data';
 
-    // ─── CONSOLE LOGGING FOR VERIFICATION ───
-    console.group(`%c🚀 Bigin CRM Form Submission: [${leadData.source || form.id}]`, 'color: #1980d8; font-weight: bold; font-size: 13px;');
-    console.log('%c📝 Typed User Data:', 'color: #00d264; font-weight: bold;', leadData);
-    console.log('%c🎯 UTM & Tracking Fields:', 'color: #ff9800; font-weight: bold;', {
-      'POTENTIALCF4 (Lead Page URL)': currentUrl,
-      'POTENTIALCF5 (UTM Source)': utmSource || '(none)',
-      'POTENTIALCF7 (UTM Campaign)': utmCampaign || '(none)',
-      'POTENTIALCF6 (UTM Content)': utmContent || '(none)',
-      'zc_gad (GCLID)': zcGad || '(none)'
-    });
-    console.log('%c⚙️ Bigin Config:', 'color: #9c27b0; font-weight: bold;', {
-      'Pipeline': 'Sales Pipeline Standard 1',
-      'Stage': 'Qualification',
-      'Lead Source': 'Official Website',
-      'Action Endpoint': form.action,
-      'Redirect (returnURL)': thankYouUrl
-    });
-    console.groupEnd();
-
     // 6. Attach UTMs & Tracking data to Google Sheets payload
     const fullSheetData = {
       ...leadData,
@@ -250,7 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const executeBiginSubmit = () => {
       if (!submitted) {
         submitted = true;
-        console.log('%c✅ Submitting payload to Bigin CRM...', 'color: #1980d8; font-weight: bold;');
         try {
           HTMLFormElement.prototype.submit.call(form);
         } catch (err) {
@@ -260,10 +240,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     if (window.submitToGoogleSheet) {
-      console.log('%c📊 Updating Google Sheet...', 'color: #0f9d58; font-weight: bold;', fullSheetData);
       window.submitToGoogleSheet(fullSheetData)
         .then(() => {
-          console.log('%c📊 Google Sheet updated successfully.', 'color: #0f9d58;');
           setTimeout(executeBiginSubmit, 150);
         })
         .catch(() => {
