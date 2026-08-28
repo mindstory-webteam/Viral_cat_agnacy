@@ -951,43 +951,492 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </a>
   </div>
 
+  <!-- Bigin CRM & Lead Submission Script (Pure JavaScript, No PHP Required) -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // 1. Calculate absolute thank you return URL
-      var returnUrl = new URL('thank-you.html', window.location.href).href;
+    (function() {
+      // ─── 1. BIGIN CRM & GOOGLE SHEETS CONFIGURATION ────────────────
+      const BIGIN_CONFIG = {
+        actionUrl: 'https://bigin.zoho.com/crm/WebForm', // If using Zoho India datacenter, change to https://bigin.zoho.in/crm/WebToContactForm or https://bigin.zoho.in/crm/WebForm
+        xnQsjsdp: 'a7f69a1ccd4de40bed4645b95d4e4f31865afdeda5a2bbad80fe0f17dbf6b497',
+        xmIwtLD: '6ef2a84dc27fb5ab21b6da00d89fb8ab77a5e3dfddf5ab87ccd38218df78e113fb88bcdca886b27dffc6ca697bdcf5bb',
+        actionType: 'UG90ZW50aWFscw==',
+        pipeline: 'Sales Pipeline Standard 1',
+        stage: 'Qualification',
+        leadSource: 'Official Website',
+        googleSheetUrl: 'https://script.google.com/macros/s/AKfycbw4MjIR_ItjsIwlc06tfZWviWSG8Rwu3tSmGIWDSAcISAoL6Nn98Qfz_V5J7OBEP_7a1Q/exec'
+      };
 
-      // 2. Parse current URL params
-      var urlParams = new URLSearchParams(window.location.search);
-      var utmSource = urlParams.get('utm_source');
-      var utmCampaign = urlParams.get('utm_campaign');
-      var utmContent = urlParams.get('utm_content');
-      var gclid = urlParams.get('gclid') || urlParams.get('zc_gad');
+      // ─── 2. GOOGLE SHEETS ASYNC SUBMISSION HELPER ──────────────────
+      function submitToGoogleSheet(data) {
+        return new Promise(function(resolve) {
+          if (!BIGIN_CONFIG.googleSheetUrl) {
+            resolve();
+            return;
+          }
+          var formData = new URLSearchParams();
+          for (var key in data) {
+            formData.append(key, data[key] != null ? data[key] : '');
+          }
+          try {
+            fetch(BIGIN_CONFIG.googleSheetUrl, {
+              method: 'POST',
+              mode: 'no-cors',
+              keepalive: true,
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: formData.toString()
+            })
+            .then(function() { setTimeout(resolve, 350); })
+            .catch(function() { setTimeout(resolve, 350); });
+          } catch (e) {
+            resolve();
+          }
+        });
+      }
 
-      // 3. Persist in sessionStorage so UTMs survive page navigation / popup open
-      if (utmSource) sessionStorage.setItem('vca_utm_source', utmSource);
-      if (utmCampaign) sessionStorage.setItem('vca_utm_campaign', utmCampaign);
-      if (utmContent) sessionStorage.setItem('vca_utm_content', utmContent);
-      if (gclid) sessionStorage.setItem('vca_zc_gad', gclid);
+      // ─── 3. EMAIL VALIDATOR ─────────────────────────────────────────
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
 
-      // Fallback from sessionStorage if not currently in URL
-      var finalSource = utmSource || sessionStorage.getItem('vca_utm_source') || '';
-      var finalCampaign = utmCampaign || sessionStorage.getItem('vca_utm_campaign') || '';
-      var finalContent = utmContent || sessionStorage.getItem('vca_utm_content') || '';
-      var finalGad = gclid || sessionStorage.getItem('vca_zc_gad') || '';
-      var currentUrl = window.location.href;
+      // ─── 4. BIGIN FORM PREPARATION & SUBMISSION ─────────────────────
+      function prepareAndSubmitBiginForm(form, leadData, submitBtn) {
+        var thankYouUrl = new URL('thank-you.html', window.location.href).href;
+        var currentUrl = window.location.href;
 
-      // 4. Auto-fill hidden fields across all forms
-      document.querySelectorAll("input[name='returnURL']").forEach(function(el) { el.value = returnUrl; });
-      document.querySelectorAll("input[name='POTENTIALCF4']").forEach(function(el) { el.value = currentUrl; });
-      document.querySelectorAll("input[name='POTENTIALCF5']").forEach(function(el) { el.value = finalSource; });
-      document.querySelectorAll("input[name='POTENTIALCF7']").forEach(function(el) { el.value = finalCampaign; });
-      document.querySelectorAll("input[name='POTENTIALCF6']").forEach(function(el) { el.value = finalContent; });
-      document.querySelectorAll("input[name='zc_gad']").forEach(function(el) { el.value = finalGad; });
-    });
+        // Extract UTMs & Tracking IDs
+        var urlParams = new URLSearchParams(window.location.search);
+        var utmSource = urlParams.get('utm_source') || sessionStorage.getItem('vca_utm_source') || '';
+        var utmCampaign = urlParams.get('utm_campaign') || sessionStorage.getItem('vca_utm_campaign') || '';
+        var utmContent = urlParams.get('utm_content') || sessionStorage.getItem('vca_utm_content') || '';
+        var zcGad = urlParams.get('gclid') || urlParams.get('zc_gad') || sessionStorage.getItem('vca_zc_gad') || '';
+
+        // Helper to ensure hidden input exists with correct value
+        function setHiddenField(name, value) {
+          var input = form.querySelector("input[name='" + name + "']");
+          if (!input) {
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = name;
+            form.appendChild(input);
+          }
+          input.value = value;
+        }
+
+        // Populate Bigin CRM required hidden tokens
+        setHiddenField('xnQsjsdp', BIGIN_CONFIG.xnQsjsdp);
+        setHiddenField('xmIwtLD', BIGIN_CONFIG.xmIwtLD);
+        setHiddenField('actionType', BIGIN_CONFIG.actionType);
+        setHiddenField('returnURL', thankYouUrl);
+        setHiddenField('Pipeline', BIGIN_CONFIG.pipeline);
+        setHiddenField('Stage', BIGIN_CONFIG.stage);
+        setHiddenField('Lead Source', BIGIN_CONFIG.leadSource);
+
+        // Populate UTM & Lead Tracking Fields
+        setHiddenField('zc_gad', zcGad);
+        setHiddenField('POTENTIALCF4', currentUrl);
+        setHiddenField('POTENTIALCF5', utmSource);
+        setHiddenField('POTENTIALCF7', utmCampaign);
+        setHiddenField('POTENTIALCF6', utmContent);
+
+        // Ensure Mobile Number contains full international dial code
+        setHiddenField('Contacts.Mobile', leadData.phone || '');
+
+        // Configure Form for direct POST to Zoho Bigin CRM
+        form.action = BIGIN_CONFIG.actionUrl;
+        form.method = 'POST';
+        form.enctype = 'multipart/form-data';
+
+        var fullSheetData = Object.assign({}, leadData, {
+          utm_source: utmSource,
+          utm_campaign: utmCampaign,
+          utm_content: utmContent,
+          lead_page_url: currentUrl,
+          gclid: zcGad
+        });
+
+        // Submit to Google Sheets, then trigger direct native Bigin submission
+        var submitted = false;
+        function executeBiginSubmit() {
+          if (!submitted) {
+            submitted = true;
+            try {
+              HTMLFormElement.prototype.submit.call(form);
+            } catch (err) {
+              form.submit();
+            }
+          }
+        }
+
+        submitToGoogleSheet(fullSheetData)
+          .then(function() { setTimeout(executeBiginSubmit, 150); })
+          .catch(function() { executeBiginSubmit(); });
+
+        // Fallback timeout to guarantee Bigin submission proceeds
+        setTimeout(executeBiginSubmit, 500);
+      }
+
+      // ─── 5. INITIALIZE TRACKING & FORM SUBMISSIONS ──────────────────
+      document.addEventListener('DOMContentLoaded', function() {
+        // Track and persist UTMs
+        var urlParams = new URLSearchParams(window.location.search);
+        var utmSource = urlParams.get('utm_source');
+        var utmCampaign = urlParams.get('utm_campaign');
+        var utmContent = urlParams.get('utm_content');
+        var gclid = urlParams.get('gclid') || urlParams.get('zc_gad');
+        var currentUrl = window.location.href;
+        var returnUrl = new URL('thank-you.html', window.location.href).href;
+
+        if (utmSource) sessionStorage.setItem('vca_utm_source', utmSource);
+        if (utmCampaign) sessionStorage.setItem('vca_utm_campaign', utmCampaign);
+        if (utmContent) sessionStorage.setItem('vca_utm_content', utmContent);
+        if (gclid) sessionStorage.setItem('vca_zc_gad', gclid);
+
+        var finalSource = utmSource || sessionStorage.getItem('vca_utm_source') || '';
+        var finalCampaign = utmCampaign || sessionStorage.getItem('vca_utm_campaign') || '';
+        var finalContent = utmContent || sessionStorage.getItem('vca_utm_content') || '';
+        var finalGad = gclid || sessionStorage.getItem('vca_zc_gad') || '';
+
+        // Auto-fill hidden fields
+        document.querySelectorAll("input[name='returnURL']").forEach(function(el) { el.value = returnUrl; });
+        document.querySelectorAll("input[name='POTENTIALCF4']").forEach(function(el) { el.value = currentUrl; });
+        document.querySelectorAll("input[name='POTENTIALCF5']").forEach(function(el) { el.value = finalSource; });
+        document.querySelectorAll("input[name='POTENTIALCF7']").forEach(function(el) { el.value = finalCampaign; });
+        document.querySelectorAll("input[name='POTENTIALCF6']").forEach(function(el) { el.value = finalContent; });
+        document.querySelectorAll("input[name='zc_gad']").forEach(function(el) { el.value = finalGad; });
+
+        // --- FORM 1: Hero Lead Form ---
+        var leadFormHero = document.getElementById('lead-form-hero');
+        if (leadFormHero) {
+          leadFormHero.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var nameInput = document.getElementById('hero-name');
+            var companyInput = document.getElementById('hero-company');
+            var phoneInput = document.getElementById('hero-phone');
+            var phoneCodeEl = document.getElementById('hero-code');
+            var emailInput = document.getElementById('hero-email');
+            var serviceInput = document.getElementById('hero-service');
+            var budgetInput = document.getElementById('hero-budget');
+            var timelineInput = document.getElementById('hero-timeline');
+            var descInput = document.getElementById('hero-description');
+
+            var name = nameInput ? nameInput.value.trim() : '';
+            var company = companyInput ? companyInput.value.trim() : '';
+            var rawPhone = phoneInput ? phoneInput.value.trim().replace(/\s+/g, '') : '';
+            var dialCode = phoneCodeEl ? phoneCodeEl.textContent.trim() : '+91';
+            var fullPhone = rawPhone ? (dialCode + rawPhone) : '';
+            var email = emailInput ? emailInput.value.trim() : '';
+            var service = serviceInput ? serviceInput.value : '';
+            var budget = budgetInput ? budgetInput.value : '';
+            var timeline = timelineInput ? timelineInput.value : '';
+            var description = descInput ? descInput.value.trim() : '';
+
+            var errorDiv = document.getElementById('hero-form-error');
+            var requiredInputs = [
+              { el: nameInput, name: 'Name', val: name },
+              { el: companyInput, name: 'Company', val: company },
+              { el: phoneInput, name: 'Phone Number', val: rawPhone },
+              { el: emailInput, name: 'Email Address', val: email },
+              { el: serviceInput, name: 'Service Interested In', val: (service !== '-None-' && service !== '') ? service : '' },
+              { el: budgetInput, name: 'Budget', val: (budget !== '-None-' && budget !== '') ? budget : '' },
+              { el: timelineInput, name: 'Timeline', val: (timeline !== '-None-' && timeline !== '') ? timeline : '' }
+            ];
+
+            var missingFields = [];
+            var hasError = false;
+            requiredInputs.forEach(function(item) {
+              if (!item.el) return;
+              if (!item.val) {
+                item.el.style.borderColor = '#ea4335';
+                missingFields.push(item.name);
+                hasError = true;
+              } else {
+                item.el.style.borderColor = '#e2e8f0';
+              }
+            });
+
+            var errorMsg = '';
+            if (missingFields.length > 0) {
+              errorMsg = 'Please fill in required fields: ' + missingFields.join(', ') + '.';
+            } else if (rawPhone && !/^[0-9+\-()\s]{6,16}$/.test(rawPhone)) {
+              if (phoneInput) phoneInput.style.borderColor = '#ea4335';
+              errorMsg = 'Please enter a valid phone number.';
+              hasError = true;
+            } else if (email && !validateEmail(email)) {
+              if (emailInput) emailInput.style.borderColor = '#ea4335';
+              errorMsg = 'Please enter a valid email address.';
+              hasError = true;
+            }
+
+            if (hasError) {
+              if (errorDiv) {
+                errorDiv.querySelector('.error-text').textContent = errorMsg;
+                errorDiv.style.display = 'flex';
+              }
+              return;
+            } else if (errorDiv) {
+              errorDiv.style.display = 'none';
+            }
+
+            var submitBtn = leadFormHero.querySelector('button[type="submit"]');
+            if (submitBtn) {
+              submitBtn.disabled = true;
+              submitBtn.textContent = 'Submitting...';
+            }
+
+            var hiddenPhone = document.getElementById('hero-phone-hidden');
+            if (hiddenPhone) hiddenPhone.value = fullPhone;
+
+            prepareAndSubmitBiginForm(leadFormHero, {
+              name: name,
+              company: company,
+              email: email,
+              phone: fullPhone,
+              service: service,
+              budget: budget,
+              timeline: timeline,
+              description: description,
+              source: 'Hero Form'
+            }, submitBtn);
+          });
+
+          ['hero-name', 'hero-company', 'hero-phone', 'hero-email', 'hero-service', 'hero-budget', 'hero-timeline', 'hero-description'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) {
+              el.addEventListener('input', function() {
+                el.style.borderColor = '#e2e8f0';
+                var err = document.getElementById('hero-form-error');
+                if (err) err.style.display = 'none';
+              });
+              el.addEventListener('change', function() {
+                el.style.borderColor = '#e2e8f0';
+                var err = document.getElementById('hero-form-error');
+                if (err) err.style.display = 'none';
+              });
+            }
+          });
+        }
+
+        // --- FORM 2: Bottom Lead Form ---
+        var leadFormBottom = document.getElementById('lead-form-bottom');
+        if (leadFormBottom) {
+          leadFormBottom.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var nameInput = document.getElementById('bottom-name');
+            var companyInput = document.getElementById('bottom-company');
+            var phoneInput = document.getElementById('bottom-phone');
+            var phoneCodeEl = document.getElementById('bottom-code');
+            var emailInput = document.getElementById('bottom-email');
+            var serviceInput = document.getElementById('bottom-service');
+            var budgetInput = document.getElementById('bottom-budget');
+            var timelineInput = document.getElementById('bottom-timeline');
+            var descInput = document.getElementById('bottom-description');
+
+            var name = nameInput ? nameInput.value.trim() : '';
+            var company = companyInput ? companyInput.value.trim() : '';
+            var rawPhone = phoneInput ? phoneInput.value.trim().replace(/\s+/g, '') : '';
+            var dialCode = phoneCodeEl ? phoneCodeEl.textContent.trim() : '+91';
+            var fullPhone = rawPhone ? (dialCode + rawPhone) : '';
+            var email = emailInput ? emailInput.value.trim() : '';
+            var service = serviceInput ? serviceInput.value : '';
+            var budget = budgetInput ? budgetInput.value : '';
+            var timeline = timelineInput ? timelineInput.value : '';
+            var desc = descInput ? descInput.value.trim() : '';
+
+            var errorDiv = document.getElementById('bottom-form-error');
+            var requiredInputs = [
+              { el: nameInput, name: 'Name', val: name },
+              { el: companyInput, name: 'Company', val: company },
+              { el: phoneInput, name: 'Phone Number', val: rawPhone },
+              { el: emailInput, name: 'Email Address', val: email },
+              { el: serviceInput, name: 'Service Interested In', val: (service !== '-None-' && service !== '') ? service : '' },
+              { el: budgetInput, name: 'Budget', val: (budget !== '-None-' && budget !== '') ? budget : '' },
+              { el: timelineInput, name: 'Timeline', val: (timeline !== '-None-' && timeline !== '') ? timeline : '' }
+            ];
+
+            var missingFields = [];
+            var hasError = false;
+            requiredInputs.forEach(function(item) {
+              if (!item.el) return;
+              if (!item.val) {
+                item.el.style.borderColor = '#ea4335';
+                missingFields.push(item.name);
+                hasError = true;
+              } else {
+                item.el.style.borderColor = '#e2e8f0';
+              }
+            });
+
+            var errorMsg = '';
+            if (missingFields.length > 0) {
+              errorMsg = 'Please fill in required fields: ' + missingFields.join(', ') + '.';
+            } else if (rawPhone && !/^[0-9+\-()\s]{6,16}$/.test(rawPhone)) {
+              if (phoneInput) phoneInput.style.borderColor = '#ea4335';
+              errorMsg = 'Please enter a valid phone number.';
+              hasError = true;
+            } else if (email && !validateEmail(email)) {
+              if (emailInput) emailInput.style.borderColor = '#ea4335';
+              errorMsg = 'Please enter a valid email address.';
+              hasError = true;
+            }
+
+            if (hasError) {
+              if (errorDiv) {
+                errorDiv.querySelector('.error-text').textContent = errorMsg;
+                errorDiv.style.display = 'flex';
+              }
+              return;
+            } else if (errorDiv) {
+              errorDiv.style.display = 'none';
+            }
+
+            var submitBtn = leadFormBottom.querySelector('button[type="submit"]');
+            if (submitBtn) {
+              submitBtn.disabled = true;
+              submitBtn.textContent = 'Submitting...';
+            }
+
+            var hiddenPhone = document.getElementById('bottom-phone-hidden');
+            if (hiddenPhone) hiddenPhone.value = fullPhone;
+
+            prepareAndSubmitBiginForm(leadFormBottom, {
+              name: name,
+              company: company,
+              email: email,
+              phone: fullPhone,
+              service: service,
+              budget: budget,
+              timeline: timeline,
+              description: desc,
+              source: 'Bottom Lead Form'
+            }, submitBtn);
+          });
+
+          ['bottom-name', 'bottom-company', 'bottom-phone', 'bottom-email', 'bottom-service', 'bottom-budget', 'bottom-timeline', 'bottom-description'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) {
+              el.addEventListener('input', function() {
+                el.style.borderColor = '#e2e8f0';
+                var err = document.getElementById('bottom-form-error');
+                if (err) err.style.display = 'none';
+              });
+              el.addEventListener('change', function() {
+                el.style.borderColor = '#e2e8f0';
+                var err = document.getElementById('bottom-form-error');
+                if (err) err.style.display = 'none';
+              });
+            }
+          });
+        }
+
+        // --- FORM 3: Popup Lead Form ---
+        var popupForm = document.getElementById('popupForm');
+        if (popupForm) {
+          popupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var nameInput = document.getElementById('popup-name');
+            var companyInput = document.getElementById('popup-brand');
+            var phoneInput = document.getElementById('popup-phone');
+            var emailInput = document.getElementById('popup-email');
+            var serviceInput = document.getElementById('popup-service');
+            var budgetInput = document.getElementById('popup-budget');
+            var timelineInput = document.getElementById('popup-timeline');
+            var descInput = document.getElementById('popup-description');
+
+            var name = nameInput ? nameInput.value.trim() : '';
+            var company = companyInput ? companyInput.value.trim() : '';
+            var phone = phoneInput ? phoneInput.value.trim() : '';
+            var email = emailInput ? emailInput.value.trim() : '';
+            var service = serviceInput ? serviceInput.value : '';
+            var budget = budgetInput ? budgetInput.value : '';
+            var timeline = timelineInput ? timelineInput.value : '';
+            var desc = descInput ? descInput.value.trim() : '';
+
+            var errorDiv = document.getElementById('popup-form-error');
+            var requiredInputs = [
+              { el: nameInput, name: 'Name', val: name },
+              { el: companyInput, name: 'Brand / Company', val: company },
+              { el: phoneInput, name: 'Phone Number', val: phone },
+              { el: emailInput, name: 'Email ID', val: email },
+              { el: serviceInput, name: 'Service Interested In', val: (service !== '-None-' && service !== '') ? service : '' },
+              { el: budgetInput, name: 'Marketing Budget', val: (budget !== '-None-' && budget !== '') ? budget : '' },
+              { el: timelineInput, name: 'Timeline', val: (timeline !== '-None-' && timeline !== '') ? timeline : '' }
+            ];
+
+            var missingFields = [];
+            var hasError = false;
+            requiredInputs.forEach(function(item) {
+              if (!item.el) return;
+              if (!item.val) {
+                item.el.style.borderColor = '#ea4335';
+                missingFields.push(item.name);
+                hasError = true;
+              } else {
+                item.el.style.borderColor = '#e2e8f0';
+              }
+            });
+
+            var errorMsg = '';
+            if (missingFields.length > 0) {
+              errorMsg = 'Please fill in required fields: ' + missingFields.join(', ') + '.';
+            } else if (email && !validateEmail(email)) {
+              if (emailInput) emailInput.style.borderColor = '#ea4335';
+              errorMsg = 'Please enter a valid email address.';
+              hasError = true;
+            }
+
+            if (hasError) {
+              if (errorDiv) {
+                errorDiv.querySelector('.error-text').textContent = errorMsg;
+                errorDiv.style.display = 'flex';
+              }
+              return;
+            } else if (errorDiv) {
+              errorDiv.style.display = 'none';
+            }
+
+            var submitBtn = popupForm.querySelector('button[type="submit"]');
+            if (submitBtn) {
+              submitBtn.disabled = true;
+              submitBtn.textContent = 'Submitting...';
+            }
+
+            prepareAndSubmitBiginForm(popupForm, {
+              name: name,
+              company: company,
+              email: email,
+              phone: phone,
+              service: service,
+              budget: budget,
+              timeline: timeline,
+              description: desc,
+              source: 'Popup Form'
+            }, submitBtn);
+          });
+
+          ['popup-name', 'popup-brand', 'popup-phone', 'popup-email', 'popup-service', 'popup-budget', 'popup-timeline', 'popup-description'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) {
+              el.addEventListener('input', function() {
+                el.style.borderColor = '#e2e8f0';
+                var err = document.getElementById('popup-form-error');
+                if (err) err.style.display = 'none';
+              });
+              el.addEventListener('change', function() {
+                el.style.borderColor = '#e2e8f0';
+                var err = document.getElementById('popup-form-error');
+                if (err) err.style.display = 'none';
+              });
+            }
+          });
+        }
+      });
+    })();
   </script>
 
-  <!-- Scripts -->
-  <script src="landing-assets/js/form-submission.js"></script>
+  <!-- UI & Layout Scripts -->
   <script src="landing-assets/js/main.js"></script>
   <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PSCMCFH4"
@@ -995,3 +1444,4 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 </body>
 </html>
+
