@@ -1041,12 +1041,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         // Ensure Mobile Number contains full international dial code
         setHiddenField('Contacts.Mobile', leadData.phone || '');
 
+        // Ensure Description field satisfies Bigin CRM mandatory validation
+        var finalDescription = (leadData.description && leadData.description.trim() !== '')
+          ? leadData.description.trim()
+          : 'Lead inquiry from ' + (leadData.source || 'Official Website');
+        
+        var descTextarea = form.querySelector("textarea[name='Description']");
+        if (descTextarea) {
+          descTextarea.value = finalDescription;
+        } else {
+          setHiddenField('Description', finalDescription);
+        }
+
         // Configure Form for direct POST to Zoho Bigin CRM
         form.action = BIGIN_CONFIG.actionUrl;
         form.method = 'POST';
         form.enctype = 'multipart/form-data';
 
         var fullSheetData = Object.assign({}, leadData, {
+          description: finalDescription,
           utm_source: utmSource,
           utm_campaign: utmCampaign,
           utm_content: utmContent,
